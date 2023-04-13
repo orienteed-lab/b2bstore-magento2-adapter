@@ -142,6 +142,7 @@ export interface ClientProps {
     useMutation: any;
     useQuery: any;
     useSubscription: any;
+    backendEdition: string;
 }
 
 export const getResolvers = (clientProps: ClientProps) => {

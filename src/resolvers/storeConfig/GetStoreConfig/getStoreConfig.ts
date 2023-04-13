@@ -1,4 +1,5 @@
 import { ClientProps } from 'src';
+
 import DEFAULT_OPERATIONS from './getStoreConfig.gql';
 
 const GetStoreConfig = (clientProps: ClientProps) => () => {

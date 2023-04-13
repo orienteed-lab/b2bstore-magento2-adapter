@@ -1,9 +1,18 @@
 import { ClientProps } from 'src';
+import DEFAULT_OPERATIONS from './getCountries.gql';
 
 const GetCountries = (clientProps: ClientProps) => () => {
-    // Look docs for more info about how to fill this function
+    const { useQuery, mergeOperations } = clientProps;
 
-    return { data: {}, loading: false, error: undefined };
+    const operations = mergeOperations(DEFAULT_OPERATIONS);
+    const { getCountriesQuery } = operations;
+
+    const { data, loading, error } = useQuery(getCountriesQuery, {
+        fetchPolicy: 'cache-and-network',
+        nextFetchPolicy: 'cache-first'
+    });
+
+    return { data, loading, error };
 };
 
 export default GetCountries;

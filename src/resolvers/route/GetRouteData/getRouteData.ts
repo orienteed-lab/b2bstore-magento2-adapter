@@ -1,10 +1,16 @@
 import { ClientProps } from 'src';
 import { GetRouteDataQueryVariables } from '@schema';
+import DEFAULT_OPERATIONS from './getRouteData.gql';
 
 const GetRouteData = (clientProps: ClientProps) => (resolverProps: GetRouteDataQueryVariables) => {
-    // Look docs for more info about how to fill this function
+    const { useAwaitQuery, mergeOperations } = clientProps;
 
-    return { data: {}, loading: false, error: undefined };
+    const operations = mergeOperations(DEFAULT_OPERATIONS);
+    const { getRouteDataQuery } = operations;
+
+    const fetchRouteData = useAwaitQuery(getRouteDataQuery);
+
+    return { fetchRouteData };
 };
 
 export default GetRouteData;

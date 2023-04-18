@@ -1,10 +1,22 @@
 import { ClientProps } from 'src';
 import { GetBreadcrumbsQueryVariables } from '@schema';
 
-const GetBreadcrumbs = (clientProps: ClientProps) => (resolverProps: GetBreadcrumbsQueryVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './getBreadcrumbs.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const GetBreadcrumbs = (clientProps: ClientProps) => (resolverProps: GetBreadcrumbsQueryVariables) => {
+    const { useQuery, mergeOperations } = clientProps;
+    const { category_id } = resolverProps;
+
+    const operations = mergeOperations(DEFAULT_OPERATIONS);
+    const { getBreadcrumbsQuery } = operations;
+
+    const { data, loading, error } = useQuery(getBreadcrumbsQuery, {
+        fetchPolicy: 'cache-and-network',
+        nextFetchPolicy: 'cache-first',
+        variables: { category_id }
+    });
+
+    return { data, loading, error };
 };
 
 export default GetBreadcrumbs;

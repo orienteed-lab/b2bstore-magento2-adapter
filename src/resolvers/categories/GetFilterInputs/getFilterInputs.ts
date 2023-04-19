@@ -1,9 +1,19 @@
 import { ClientProps } from 'src';
 
-const GetFilterInputs = (clientProps: ClientProps) => () => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './getFilterInputs.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const GetFilterInputs = (clientProps: ClientProps) => () => {
+    const { useQuery, mergeOperations } = clientProps;
+
+    const operations = mergeOperations(DEFAULT_OPERATIONS);
+    const { getFilterInputsQuery } = operations;
+
+    const { data, loading, error, called } = useQuery(getFilterInputsQuery, {
+        fetchPolicy: 'cache-and-network',
+        nextFetchPolicy: 'cache-first'
+    });
+
+    return { data, loading, error, called };
 };
 
 export default GetFilterInputs;

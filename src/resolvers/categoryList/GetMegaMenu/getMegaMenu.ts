@@ -1,9 +1,16 @@
 import { ClientProps } from 'src';
 
-const GetMegaMenu = (clientProps: ClientProps) => () => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './getMegaMenu.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const GetMegaMenu = (clientProps: ClientProps) => () => {
+    const { useQuery, mergeOperations } = clientProps;
+
+    const operations = mergeOperations(DEFAULT_OPERATIONS);
+    const { getMegaMenuQuery } = operations;
+
+    const { data, loading, error, refetch } = useQuery(getMegaMenuQuery);
+
+    return { data, loading, error, refetch };
 };
 
 export default GetMegaMenu;

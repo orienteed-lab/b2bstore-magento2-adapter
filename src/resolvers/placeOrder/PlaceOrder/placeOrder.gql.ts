@@ -1,7 +1,13 @@
 import { gql } from '@apollo/client';
 
 export const PLACE_ORDER = gql`
-    # Your query here
+    mutation PlaceOrder($cartId: String!) {
+        placeOrder(input: { cart_id: $cartId }) {
+            order {
+                order_number
+            }
+        }
+    }
 `;
 
 export default {

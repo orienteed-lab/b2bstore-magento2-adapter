@@ -1,7 +1,15 @@
 import { gql } from '@apollo/client';
+import { ItemsReviewFragment } from '../../fragments/itemsReviewFragments.gql'
 
 export const LIST_PRODUCTS_IN_CART = gql`
-    # Your query here
+    query GetItemsInCart($cartId: String!) {
+        cart(cart_id: $cartId) {
+            id
+            ...ItemsReviewFragment
+        }
+    }
+
+    ${ItemsReviewFragment}
 `;
 
 export default {

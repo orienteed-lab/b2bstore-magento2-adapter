@@ -1,7 +1,14 @@
 import { gql } from '@apollo/client';
+import { CheckoutPageFragment } from '../../fragments/checkoutPageFragments.gql'
 
 export const GET_CHECKOUT_DETAILS = gql`
-    # Your query here
+    query GetCheckoutDetails($cartId: String!) {
+        cart(cart_id: $cartId) {
+            id
+            ...CheckoutPageFragment
+        }
+    }
+    ${CheckoutPageFragment}
 `;
 
 export default {

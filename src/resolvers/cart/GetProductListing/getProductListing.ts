@@ -1,10 +1,18 @@
 import { ClientProps } from 'src';
 import { GetProductListingQueryVariables } from '@schema';
 
-const GetProductListing = (clientProps: ClientProps) => (resolverProps: GetProductListingQueryVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './getProductListing.gql'
 
-    return { data: {}, loading: false, error: undefined };
+const GetProductListing = (clientProps: ClientProps) => (resolverProps: GetProductListingQueryVariables = {cartId:''}) => {
+    const { mergeOperations, useLazyQuery } = clientProps;
+    
+    const { getProductListingQuery } = mergeOperations(DEFAULT_OPERATIONS);
+    const [fetchProductListing, { called, data, error, loading }] = useLazyQuery(getProductListingQuery, {
+        fetchPolicy: 'cache-and-network',
+        nextFetchPolicy: 'cache-first'
+    });
+
+    return { fetchProductListing, data, loading, error, called };
 };
 
 export default GetProductListing;

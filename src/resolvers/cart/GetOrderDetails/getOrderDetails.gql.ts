@@ -1,7 +1,14 @@
 import { gql } from '@apollo/client';
+import { OrderConfirmationPageFragment } from '../../fragments/orderConfirmationPageFragments.gql'
 
 export const GET_ORDER_DETAILS = gql`
-    # Your query here
+    query GetOrderDetails($cartId: String!) {
+        cart(cart_id: $cartId) {
+            id
+            ...OrderConfirmationPageFragment
+        }
+    }
+    ${OrderConfirmationPageFragment}
 `;
 
 export default {

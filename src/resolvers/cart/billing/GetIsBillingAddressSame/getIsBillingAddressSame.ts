@@ -1,10 +1,20 @@
 import { ClientProps } from 'src';
 import { GetIsBillingAddressSameQueryVariables } from '@schema';
 
-const GetIsBillingAddressSame = (clientProps: ClientProps) => (resolverProps: GetIsBillingAddressSameQueryVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './getIsBillingAddressSame.gql'
 
-    return { data: {}, loading: false, error: undefined };
+const GetIsBillingAddressSame = (clientProps: ClientProps) => (resolverProps: GetIsBillingAddressSameQueryVariables) => {
+    const { mergeOperations, useQuery } = clientProps;
+    const { cartId } = resolverProps;
+
+    const { getIsBillingAddressSameQuery } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const { data } = useQuery(getIsBillingAddressSameQuery, {
+        skip: !cartId,
+        variables: { cartId }
+    });
+
+    return { data, getIsBillingAddressSameQuery };
 };
 
 export default GetIsBillingAddressSame;

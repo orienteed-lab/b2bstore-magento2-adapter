@@ -49,7 +49,7 @@ export const SET_BILLING_ADDRESS_CE = gql`
                     postcode
                     telephone
                 }
-                ...PriceSummaryFragment
+                ...PriceSummaryFragmentCE
                 ...AvailablePaymentMethodsFragment
             }
         }
@@ -104,7 +104,7 @@ export const SET_BILLING_ADDRESS_EE = gql`
                     postcode
                     telephone
                 }
-                ...PriceSummaryFragment
+                ...PriceSummaryFragmentEE
                 ...AvailablePaymentMethodsFragment
             }
         }

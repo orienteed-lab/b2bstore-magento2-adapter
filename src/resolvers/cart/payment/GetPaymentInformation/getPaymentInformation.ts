@@ -1,10 +1,22 @@
 import { ClientProps } from 'src';
 import { GetPaymentInformationQueryVariables } from '@schema';
 
-const GetPaymentInformation = (clientProps: ClientProps) => (resolverProps: GetPaymentInformationQueryVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './getPaymentInformation.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const GetPaymentInformation = (clientProps: ClientProps) => (resolverProps: GetPaymentInformationQueryVariables) => {
+    const { mergeOperations, useQuery } = clientProps;
+    const { cartId } = resolverProps;
+
+    const { getPaymentInformationQuery } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const { data, loading } = useQuery(getPaymentInformationQuery, {
+        fetchPolicy: 'cache-and-network',
+        nextFetchPolicy: 'cache-first',
+        skip: !cartId,
+        variables: { cartId }
+    });
+
+    return { data, loading };
 };
 
 export default GetPaymentInformation;

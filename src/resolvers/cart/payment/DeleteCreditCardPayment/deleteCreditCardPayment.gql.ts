@@ -1,7 +1,17 @@
 import { gql } from '@apollo/client';
 
+import { SavedPaymentsFragment } from '../../../fragments/savedPaymentsPage.gql';
+
 export const DELETE_CREDIT_CARD_PAYMENT = gql`
-    # Your query here
+    mutation DeleteCreditCardPayment($paymentHash: String!) {
+        deletePaymentToken(public_hash: $paymentHash) {
+            customerPaymentTokens {
+                ...SavedPaymentsFragment
+            }
+            result
+        }
+    }
+    ${SavedPaymentsFragment}
 `;
 
 export default {

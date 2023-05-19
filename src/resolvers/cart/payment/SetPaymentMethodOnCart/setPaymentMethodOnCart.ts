@@ -1,10 +1,16 @@
 import { ClientProps } from 'src';
 import { SetPaymentMethodOnCartMutationVariables } from '@schema';
 
-const SetPaymentMethodOnCart = (clientProps: ClientProps) => (resolverProps: SetPaymentMethodOnCartMutationVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './setPaymentMethodOnCart.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const SetPaymentMethodOnCart = (clientProps: ClientProps) => (resolverProps: SetPaymentMethodOnCartMutationVariables) => {
+    const { mergeOperations, useMutation } = clientProps;
+
+    const { setPaymentMethodOnCartMutation } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const [fetch, { error, called, loading }] = useMutation(setPaymentMethodOnCartMutation);
+
+    return { fetch, called, loading, error };
 };
 
 export default SetPaymentMethodOnCart;

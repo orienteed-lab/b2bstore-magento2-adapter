@@ -1,9 +1,24 @@
 import { ClientProps } from 'src';
 
-const GetSavedPayments = (clientProps: ClientProps) => () => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './getSavedPayments.gql';
 
-    return { data: {}, loading: false, error: undefined };
+interface SavedPaymentsProps {
+    isSignedIn: boolean
+}
+
+const GetSavedPayments = (clientProps: ClientProps) => (resolverProps: SavedPaymentsProps) => {
+    const { mergeOperations, useQuery } = clientProps;
+    const { isSignedIn } = resolverProps;
+
+    const { getSavedPaymentsQuery } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const { data, loading } = useQuery(getSavedPaymentsQuery, {
+        fetchPolicy: 'cache-and-network',
+        nextFetchPolicy: 'cache-first',
+        skip: !isSignedIn
+    });
+
+    return { data, loading };
 };
 
 export default GetSavedPayments;

@@ -1,7 +1,22 @@
 import { gql } from '@apollo/client';
 
+export const SavedPaymentsFragment = gql`
+    fragment SavedPaymentsFragment on CustomerPaymentTokens {
+        items {
+            details
+            public_hash
+            payment_method_code
+        }
+    }
+`;
+
 export const GET_SAVED_PAYMENTS = gql`
-    # Your query here
+    query GetSavedPayments {
+        customerPaymentTokens {
+            ...SavedPaymentsFragment
+        }
+    }
+    ${SavedPaymentsFragment}
 `;
 
 export default {

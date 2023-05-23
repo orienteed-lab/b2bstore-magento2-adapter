@@ -1,7 +1,15 @@
 import { gql } from '@apollo/client';
 
+import { ShippingInformationFragment } from '../../../fragments/shippingInformationFragments.gql';
+
 export const GET_SHIPPING_INFORMATION = gql`
-    # Your query here
+    query GetShippingInformation($cartId: String!) {
+        cart(cart_id: $cartId) {
+            id
+            ...ShippingInformationFragment
+        }
+    }
+    ${ShippingInformationFragment}
 `;
 
 export default {

@@ -1,10 +1,22 @@
 import { ClientProps } from 'src';
 import { GetShippingInformationQueryVariables } from '@schema';
 
-const GetShippingInformation = (clientProps: ClientProps) => (resolverProps: GetShippingInformationQueryVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './getShippingInformation.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const GetShippingInformation = (clientProps: ClientProps) => (resolverProps: GetShippingInformationQueryVariables) => {
+    const { mergeOperations, useQuery } = clientProps;
+    const { cartId } = resolverProps;
+
+    const { getShippingInformationQuery } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const { data, loading } = useQuery(getShippingInformationQuery, {
+        skip: !cartId,
+        variables: {
+            cartId
+        }
+    });
+
+    return { data, loading };
 };
 
 export default GetShippingInformation;

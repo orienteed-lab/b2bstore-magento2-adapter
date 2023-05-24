@@ -1,10 +1,17 @@
 import { ClientProps } from 'src';
 import { ApplyCouponToCartMutationVariables } from '@schema';
 
-const ApplyCouponToCart = (clientProps: ClientProps) => (resolverProps: ApplyCouponToCartMutationVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './applyCouponToCart.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const ApplyCouponToCart = (clientProps: ClientProps) => (resolverProps: ApplyCouponToCartMutationVariables) => {
+    const { backendEdition, mergeOperations, useMutation } = clientProps;
+
+    const { applyCouponToCartMutationCE, applyCouponToCartMutationEE } = mergeOperations(DEFAULT_OPERATIONS);
+    const applyCouponToCartMutation = backendEdition === 'EE' ? applyCouponToCartMutationEE : applyCouponToCartMutationCE;
+
+    const [applyCoupon, { called, error, loading }] = useMutation(applyCouponToCartMutation);
+
+    return { applyCoupon, called, loading, error };
 };
 
 export default ApplyCouponToCart;

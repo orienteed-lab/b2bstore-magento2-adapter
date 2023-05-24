@@ -1,10 +1,20 @@
 import { ClientProps } from 'src';
 import { RemoveCouponFromCartMutationVariables } from '@schema';
 
-const RemoveCouponFromCart = (clientProps: ClientProps) => (resolverProps: RemoveCouponFromCartMutationVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './removeCouponFromCart.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const RemoveCouponFromCart = (clientProps: ClientProps) => (resolverProps: RemoveCouponFromCartMutationVariables) => {
+    const { backendEdition, mergeOperations, useMutation } = clientProps;
+
+    const { removeCouponFromCartMutationCE, removeCouponFromCartMutationEE } = mergeOperations(DEFAULT_OPERATIONS);
+    const removeCouponFromCartMutation = backendEdition === 'EE' ? removeCouponFromCartMutationEE : removeCouponFromCartMutationCE;
+
+    const [
+        removeCoupon,
+        { called, error, loading }
+    ] = useMutation(removeCouponFromCartMutation);
+
+    return { removeCoupon, called, loading, error };
 };
 
 export default RemoveCouponFromCart;

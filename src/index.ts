@@ -131,7 +131,8 @@ import {
     saveSavedCarts,
     shareSavedCarts,
     getStoreConfig,
-    getWebkulPaymentCreditSystemConfig
+    getWebkulPaymentCreditSystemConfig,
+    setGuestShipping
 } from './resolvers';
 
 export interface ClientProps {
@@ -279,6 +280,7 @@ export const getResolvers = (clientProps: ClientProps) => {
         saveSavedCarts: saveSavedCarts(clientProps),
         shareSavedCarts: shareSavedCarts(clientProps),
         getStoreConfig: getStoreConfig(clientProps),
-        getWebkulPaymentCreditSystemConfig: getWebkulPaymentCreditSystemConfig(clientProps)
+        getWebkulPaymentCreditSystemConfig: getWebkulPaymentCreditSystemConfig(clientProps),
+        setGuestShipping: setGuestShipping(clientProps)
     };
 };

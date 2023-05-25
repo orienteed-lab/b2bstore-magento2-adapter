@@ -131,3 +131,4 @@ export { default as updateConfigurableOptions } from './product/UpdateConfigurab
 export { default as updateCustomerAddressInAddressBook } from './customer/address/UpdateCustomerAddressInAddressBook/updateCustomerAddressInAddressBook';
 export { default as updateQuote } from './requestQuote/UpdateQuote/updateQuote';
 export { default as updateWishlist } from './customer/wishlist/UpdateWishlist/updateWishlist';
+export { default as setGuestShipping } from './cart/SetGuestShipping/setGuestShipping';

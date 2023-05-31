@@ -1,7 +1,16 @@
 import { gql } from '@apollo/client';
 
 export const GET_AVAILABLE_SORT_METHODS_BY_SEARCH = gql`
-    # Your query here
+    query GetAvailableSortMethodsBySearch($search: String!) {
+        products(search: $search) {
+            sort_fields {
+                options {
+                    label
+                    value
+                }
+            }
+        }
+    }
 `;
 
 export default {

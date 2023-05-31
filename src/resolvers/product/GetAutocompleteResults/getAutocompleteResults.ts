@@ -1,10 +1,36 @@
 import { ClientProps } from 'src';
 import { GetAutocompleteResultsQueryVariables } from '@schema';
 
-const GetAutocompleteResults = (clientProps: ClientProps) => (resolverProps: GetAutocompleteResultsQueryVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './getAutocompleteResults.gql';
 
-    return { data: {}, loading: false, error: undefined };
+interface GetAutocompleteResultsProps extends GetAutocompleteResultsQueryVariables {
+    hasVars: boolean
+}
+
+const GetAutocompleteResults = (clientProps: ClientProps) => (resolverProps: GetAutocompleteResultsProps) => {
+    const { mergeOperations, useLazyQuery } = clientProps;
+    const { hasVars } = resolverProps;
+
+    const { getAutocompleteResultsQuery } = mergeOperations(DEFAULT_OPERATIONS);
+
+    if (hasVars) {
+        const { inputText } = resolverProps;
+
+        const [runSearch, productResult] = useLazyQuery(getAutocompleteResultsQuery, {
+            fetchPolicy: 'cache-and-network',
+            variables: { search_query: inputText },
+            nextFetchPolicy: 'cache-first'
+        });
+
+        return { runSearch, productResult };
+    } else {
+        const [runSearch, productResult] = useLazyQuery(getAutocompleteResultsQuery, {
+            fetchPolicy: 'cache-and-network',
+            nextFetchPolicy: 'cache-first'
+        });
+
+        return { runSearch, productResult };
+    }
 };
 
 export default GetAutocompleteResults;

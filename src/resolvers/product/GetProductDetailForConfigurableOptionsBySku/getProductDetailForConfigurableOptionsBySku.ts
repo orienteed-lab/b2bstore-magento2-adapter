@@ -1,11 +1,36 @@
 import { ClientProps } from 'src';
 import { GetProductDetailForConfigurableOptionsBySkuQueryVariables } from '@schema';
 
-const GetProductDetailForConfigurableOptionsBySku =
-    (clientProps: ClientProps) => (resolverProps: GetProductDetailForConfigurableOptionsBySkuQueryVariables) => {
-        // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './getProductDetailForConfigurableOptionsBySku.gql';
 
-        return { data: {}, loading: false, error: undefined };
+interface GetProductDetailForConfigurableOptionsBySkuProps extends GetProductDetailForConfigurableOptionsBySkuQueryVariables {
+    isLazy: boolean,
+    cartItem?: any
+}
+
+const GetProductDetailForConfigurableOptionsBySku =
+    (clientProps: ClientProps) => (resolverProps: GetProductDetailForConfigurableOptionsBySkuProps) => {
+        const { mergeOperations, useQuery, useLazyQuery } = clientProps;
+        const { isLazy } = resolverProps;
+
+        const { getProductDetailForConfigurableOptionsBySkuQuery } = mergeOperations(DEFAULT_OPERATIONS);
+
+        if (isLazy) {
+            const [runQuery, queryResult] = useLazyQuery(getProductDetailForConfigurableOptionsBySkuQuery);
+
+            return { runQuery, queryResult };
+        } else {
+            const { cartItem } = resolverProps;
+
+            const { data, error, loading } = useQuery(getProductDetailForConfigurableOptionsBySkuQuery, {
+                skip: !cartItem,
+                variables: {
+                    sku: cartItem ? cartItem.product.sku : null
+                }
+            });
+
+            return { data, error, loading };
+        }
     };
 
 export default GetProductDetailForConfigurableOptionsBySku;

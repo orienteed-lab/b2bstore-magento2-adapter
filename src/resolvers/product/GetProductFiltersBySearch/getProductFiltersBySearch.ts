@@ -1,10 +1,19 @@
 import { ClientProps } from 'src';
 import { GetProductFiltersBySearchQueryVariables } from '@schema';
 
-const GetProductFiltersBySearch = (clientProps: ClientProps) => (resolverProps: GetProductFiltersBySearchQueryVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './getProductFiltersBySearch.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const GetProductFiltersBySearch = (clientProps: ClientProps) => (resolverProps: GetProductFiltersBySearchQueryVariables) => {
+    const { mergeOperations, useLazyQuery } = clientProps;
+
+    const { getProductFiltersBySearchQuery } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const [getFilters, { data }] = useLazyQuery(getProductFiltersBySearchQuery, {
+        fetchPolicy: 'cache-and-network',
+        nextFetchPolicy: 'cache-first'
+    });
+
+    return { getFilters, data };
 };
 
 export default GetProductFiltersBySearch;

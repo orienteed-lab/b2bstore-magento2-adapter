@@ -1,10 +1,19 @@
 import { ClientProps } from 'src';
 import { GetSimpleProductQueryVariables } from '@schema';
 
-const GetSimpleProduct = (clientProps: ClientProps) => (resolverProps: GetSimpleProductQueryVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './getSimpleProduct.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const GetSimpleProduct = (clientProps: ClientProps) => (resolverProps: GetSimpleProductQueryVariables) => {
+    const { mergeOperations, useQuery } = clientProps;
+    const { sku } = resolverProps;
+
+    const { getSimpleProductQuery } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const { data, loading, error } = useQuery(getSimpleProductQuery, {
+        variables: { sku: sku }
+    });
+
+    return { data, loading, error };
 };
 
 export default GetSimpleProduct;

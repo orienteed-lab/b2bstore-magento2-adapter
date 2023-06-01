@@ -1,10 +1,22 @@
 import { ClientProps } from 'src';
 import { GetProductsDetailsBySearchQueryVariables } from '@schema';
 
-const GetProductsDetailsBySearch = (clientProps: ClientProps) => (resolverProps: GetProductsDetailsBySearchQueryVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './getProductsDetailsBySearch.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const GetProductsDetailsBySearch = (clientProps: ClientProps) => (resolverProps: GetProductsDetailsBySearchQueryVariables) => {
+    const { mergeOperations, useLazyQuery } = clientProps;
+
+    const { getProductsDetailsBySearchQuery } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const [runQuery, { called, loading, error, data }] = useLazyQuery(
+        getProductsDetailsBySearchQuery,
+        {
+            fetchPolicy: 'cache-and-network',
+            nextFetchPolicy: 'cache-first'
+        }
+    );
+
+    return { runQuery, data, loading, error, called };
 };
 
 export default GetProductsDetailsBySearch;

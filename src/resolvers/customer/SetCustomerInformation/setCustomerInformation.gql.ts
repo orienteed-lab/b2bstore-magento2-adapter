@@ -1,7 +1,16 @@
 import { gql } from '@apollo/client';
 
+import { AccountInformationPageFragment } from '../../fragments/accountInformationPageFragment.gql';
+
 export const SET_CUSTOMER_INFORMATION = gql`
-    # Your query here
+    mutation SetCustomerInformation($customerInput: CustomerInput!) {
+        updateCustomer(input: $customerInput) {
+            customer {
+                ...AccountInformationPageFragment
+            }
+        }
+    }
+    ${AccountInformationPageFragment}
 `;
 
 export default {

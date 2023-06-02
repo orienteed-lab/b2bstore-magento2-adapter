@@ -1,10 +1,18 @@
 import { ClientProps } from 'src';
 import { SignInMutationVariables } from '@schema';
 
-const SignIn = (clientProps: ClientProps) => (resolverProps: SignInMutationVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './signIn.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const SignIn = (clientProps: ClientProps) => (resolverProps: SignInMutationVariables) => {
+    const { mergeOperations, useMutation } = clientProps;
+
+    const { signInMutation } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const [signIn, { error }] = useMutation(signInMutation, {
+        fetchPolicy: 'no-cache'
+    });
+
+    return { signIn, error };
 };
 
 export default SignIn;

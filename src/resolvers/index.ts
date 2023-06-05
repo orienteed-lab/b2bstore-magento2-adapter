@@ -133,3 +133,4 @@ export { default as updateQuote } from './requestQuote/UpdateQuote/updateQuote';
 export { default as updateWishlist } from './customer/wishlist/UpdateWishlist/updateWishlist';
 export { default as setGuestShipping } from './cart/SetGuestShipping/setGuestShipping';
 export { default as setGuestEmailOnCart } from './cart/SetGuestEmailOnCart/setGuestEmailOnCart';
+export { default as isEmailAvailable } from './customer/IsEmailAvailable/isEmailAvailable';

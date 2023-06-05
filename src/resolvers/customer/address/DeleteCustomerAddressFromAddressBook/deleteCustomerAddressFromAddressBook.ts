@@ -1,11 +1,17 @@
 import { ClientProps } from 'src';
 import { DeleteCustomerAddressFromAddressBookMutationVariables } from '@schema';
 
+import DEFAULT_OPERATIONS from './deleteCustomerAddressFromAddressBook.gql';
+
 const DeleteCustomerAddressFromAddressBook =
     (clientProps: ClientProps) => (resolverProps: DeleteCustomerAddressFromAddressBookMutationVariables) => {
-        // Look docs for more info about how to fill this function
+        const { mergeOperations, useMutation } = clientProps;
 
-        return { data: {}, loading: false, error: undefined };
+        const { deleteCustomerAddressFromAddressBookMutation } = mergeOperations(DEFAULT_OPERATIONS);
+
+        const [deleteCustomerAddress, { loading }] = useMutation(deleteCustomerAddressFromAddressBookMutation);
+
+        return { deleteCustomerAddress, loading };
     };
 
 export default DeleteCustomerAddressFromAddressBook;

@@ -1,9 +1,13 @@
 import { gql } from '@apollo/client';
 
 export const SUBSCRIBE_TO_NEWSLETTER = gql`
-    # Your query here
+    mutation SubscribeToNewsletter($email: String!) {
+        subscribeEmailToNewsletter(email: $email) {
+            status
+        }
+    }
 `;
 
 export default {
-    getCustomerSubscriptionQuery: SUBSCRIBE_TO_NEWSLETTER
+    subscribeToNewsletterMutation: SUBSCRIBE_TO_NEWSLETTER
 };

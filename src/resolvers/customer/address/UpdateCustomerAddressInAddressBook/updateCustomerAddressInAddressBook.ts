@@ -1,11 +1,35 @@
 import { ClientProps } from 'src';
 import { UpdateCustomerAddressInAddressBookMutationVariables } from '@schema';
 
-const UpdateCustomerAddressInAddressBook =
-    (clientProps: ClientProps) => (resolverProps: UpdateCustomerAddressInAddressBookMutationVariables) => {
-        // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './updateCustomerAddressInAddressBook.gql';
 
-        return { data: {}, loading: false, error: undefined };
+interface UpdateCustomerAddressInAddressBookProps extends UpdateCustomerAddressInAddressBookMutationVariables {
+    onSuccess?: any;
+    hasOnSuccess: boolean;
+}
+
+const UpdateCustomerAddressInAddressBook =
+    (clientProps: ClientProps) =>
+    (resolverProps: UpdateCustomerAddressInAddressBookProps = { hasOnSuccess: false, addressId: 0, updated_address: {} }) => {
+        const { mergeOperations, useMutation } = clientProps;
+        const { hasOnSuccess } = resolverProps;
+
+        const { updateCustomerAddressInAddressBookMutation } = mergeOperations(DEFAULT_OPERATIONS);
+
+        if (hasOnSuccess) {
+            const { onSuccess } = resolverProps;
+            const [updateCustomerAddress, { error, loading }] = useMutation(updateCustomerAddressInAddressBookMutation, {
+                onCompleted: () => {
+                    onSuccess();
+                }
+            });
+
+            return { updateCustomerAddress, error, loading };
+        } else {
+            const [updateCustomerAddress, { error, loading }] = useMutation(updateCustomerAddressInAddressBookMutation);
+
+            return { updateCustomerAddress, error, loading };
+        }
     };
 
 export default UpdateCustomerAddressInAddressBook;

@@ -9,10 +9,11 @@ interface AddProductToWishlistProps extends AddProductToWishlistMutationVariable
 }
 
 const AddProductToWishlist = (clientProps: ClientProps) => (resolverProps: AddProductToWishlistProps) => {
-    const { mergeOperations, useMutation } = clientProps;
+    const { mergeOperations, backendEdition, useMutation } = clientProps;
     const { hasRefetch } = resolverProps;
 
-    const { addProductToWishlistMutation, getWishlistsQuery } = mergeOperations(DEFAULT_OPERATIONS, WISHLIST_OPERATIONS);
+    const { addProductToWishlistMutation, getWishlistsQueryCE, getWishlistsQueryEE } = mergeOperations(DEFAULT_OPERATIONS, WISHLIST_OPERATIONS);
+    const getWishlistsQuery = backendEdition === 'EE' ? getWishlistsQueryEE : getWishlistsQueryCE;
 
     if (hasRefetch) {
         const [addProductToWishlist, { loading, error }] = useMutation(addProductToWishlistMutation, {

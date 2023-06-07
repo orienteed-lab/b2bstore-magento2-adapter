@@ -1,9 +1,15 @@
 import { ClientProps } from 'src';
 
-const GetProductsInWishlists = (clientProps: ClientProps) => () => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './getProductsInWishlists.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const GetProductsInWishlists = (clientProps: ClientProps) => () => {
+    const { mergeOperations, useQuery } = clientProps;
+
+    const { getProductsInWishlistsQuery } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const { client, data } = useQuery(getProductsInWishlistsQuery);
+
+    return { data, client };
 };
 
 export default GetProductsInWishlists;

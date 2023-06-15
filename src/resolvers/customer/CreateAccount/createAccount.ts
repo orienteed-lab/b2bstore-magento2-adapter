@@ -1,10 +1,18 @@
 import { ClientProps } from 'src';
 import { CreateAccountMutationVariables } from '@schema';
 
-const CreateAccount = (clientProps: ClientProps) => (resolverProps: CreateAccountMutationVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './createAccount.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const CreateAccount = (clientProps: ClientProps) => (resolverProps: CreateAccountMutationVariables) => {
+    const { mergeOperations, useMutation } = clientProps;
+    
+    const { createAccountMutation } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const [createAccount, { error }] = useMutation(createAccountMutation, {
+        fetchPolicy: 'no-cache'
+    });
+
+    return { createAccount, error };
 };
 
 export default CreateAccount;

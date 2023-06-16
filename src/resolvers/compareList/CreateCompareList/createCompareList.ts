@@ -1,10 +1,16 @@
 import { ClientProps } from 'src';
 import { CreateCompareListMutationVariables } from '@schema';
 
-const CreateCompareList = (clientProps: ClientProps) => (resolverProps: CreateCompareListMutationVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './createCompareList.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const CreateCompareList = (clientProps: ClientProps) => (resolverProps: CreateCompareListMutationVariables) => {
+    const { mergeOperations, useMutation } = clientProps;
+
+    const { createCompareListMutation } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const [createCompareList] = useMutation(createCompareListMutation);
+
+    return { createCompareList };
 };
 
 export default CreateCompareList;

@@ -1,10 +1,16 @@
 import { ClientProps } from 'src';
 import { DeleteProductsFromCompareListMutationVariables } from '@schema';
 
-const DeleteProductsFromCompareList = (clientProps: ClientProps) => (resolverProps: DeleteProductsFromCompareListMutationVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './deleteProductsFromCompareList.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const DeleteProductsFromCompareList = (clientProps: ClientProps) => (resolverProps: DeleteProductsFromCompareListMutationVariables) => {
+    const { mergeOperations, useMutation } = clientProps;
+
+    const { deleteProductsFromCompareListMutation } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const [deleteProductsFromList] = useMutation(deleteProductsFromCompareListMutation);
+
+    return { deleteProductsFromList };
 };
 
 export default DeleteProductsFromCompareList;

@@ -1,10 +1,16 @@
 import { ClientProps } from 'src';
 import { AddConfigurableProductsToQuoteMutationVariables } from '@schema';
 
-const AddConfigurableProductsToQuote = (clientProps: ClientProps) => (resolverProps: AddConfigurableProductsToQuoteMutationVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './addConfigurableProductsToQuote.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const AddConfigurableProductsToQuote = (clientProps: ClientProps) => (resolverProps: AddConfigurableProductsToQuoteMutationVariables) => {
+    const { mergeOperations, useMutation } = clientProps;
+
+    const { addConfigurableProductsToQuoteMutation } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const [addConfigProductToQuote] = useMutation(addConfigurableProductsToQuoteMutation);
+
+    return { addConfigProductToQuote };
 };
 
 export default AddConfigurableProductsToQuote;

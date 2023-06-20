@@ -1,10 +1,16 @@
 import { ClientProps } from 'src';
 import { AddQuoteToCartMutationVariables } from '@schema';
 
-const AddQuoteToCart = (clientProps: ClientProps) => (resolverProps: AddQuoteToCartMutationVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './addQuoteToCart.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const AddQuoteToCart = (clientProps: ClientProps) => (resolverProps: AddQuoteToCartMutationVariables) => {
+    const { mergeOperations, useMutation } = clientProps;
+
+    const { addQuoteToCartMutation } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const [addMpQuoteToCart] = useMutation(addQuoteToCartMutation);
+
+    return { addMpQuoteToCart };
 };
 
 export default AddQuoteToCart;

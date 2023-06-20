@@ -1,9 +1,17 @@
 import { ClientProps } from 'src';
 
-const GetConfigDetailsForQuote = (clientProps: ClientProps) => () => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './getConfigDetailsForQuote.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const GetConfigDetailsForQuote = (clientProps: ClientProps) => () => {
+    const { mergeOperations, useQuery } = clientProps;
+
+    const { getConfigDetailsForQuoteQuery } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const { data, loading } = useQuery(getConfigDetailsForQuoteQuery, {
+        fetchPolicy: 'network-only'
+    });
+
+    return { data, loading };
 };
 
 export default GetConfigDetailsForQuote;

@@ -1,10 +1,16 @@
 import { ClientProps } from 'src';
 import { CancelQuoteMutationVariables } from '@schema';
 
-const CancelQuote = (clientProps: ClientProps) => (resolverProps: CancelQuoteMutationVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './cancelQuote.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const CancelQuote = (clientProps: ClientProps) => (resolverProps: CancelQuoteMutationVariables) => {
+    const { mergeOperations, useMutation } = clientProps;
+
+    const { cancelQuoteMutation } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const [cancelMpQuote] = useMutation(cancelQuoteMutation);
+
+    return { cancelMpQuote };
 };
 
 export default CancelQuote;

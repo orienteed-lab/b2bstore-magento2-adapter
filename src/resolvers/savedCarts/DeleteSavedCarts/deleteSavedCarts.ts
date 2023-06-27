@@ -1,10 +1,22 @@
 import { ClientProps } from 'src';
 import { DeleteSavedCartsMutationVariables } from '@schema';
 
-const DeleteSavedCarts = (clientProps: ClientProps) => (resolverProps: DeleteSavedCartsMutationVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './deleteSavedCarts.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const DeleteSavedCarts = (clientProps: ClientProps) => (resolverProps: DeleteSavedCartsMutationVariables) => {
+    const { mergeOperations, useMutation } = clientProps;
+    const { token } = resolverProps;
+
+    const { deleteSavedCartsMutation } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const [deleteSaveCart] = useMutation(deleteSavedCartsMutation, {
+        fetchPolicy: 'no-cache',
+        variables: {
+            token: token
+        }
+    });
+
+    return { deleteSaveCart };
 };
 
 export default DeleteSavedCarts;

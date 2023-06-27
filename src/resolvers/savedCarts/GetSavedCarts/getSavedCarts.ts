@@ -1,10 +1,24 @@
 import { ClientProps } from 'src';
 import { GetSavedCartsQueryVariables } from '@schema';
 
-const GetSavedCarts = (clientProps: ClientProps) => (resolverProps: GetSavedCartsQueryVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './getSavedCarts.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const GetSavedCarts = (clientProps: ClientProps) => (resolverProps: GetSavedCartsQueryVariables) => {
+    const { mergeOperations, useQuery } = clientProps;
+    const { currentPage, pageSize } = resolverProps;
+
+    const { getSavedCartsQuery } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const { data, refetch } = useQuery(getSavedCartsQuery, {
+        fetchPolicy: 'network-only',
+        nextFetchPolicy: 'cache-first',
+        variables: {
+            pageSize,
+            currentPage
+        }
+    });
+
+    return { data, refetch };
 };
 
 export default GetSavedCarts;

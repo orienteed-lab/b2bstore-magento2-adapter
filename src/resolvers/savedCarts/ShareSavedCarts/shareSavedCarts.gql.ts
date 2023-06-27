@@ -1,7 +1,9 @@
 import { gql } from '@apollo/client';
 
 export const SHARE_CART = gql`
-    # Your query here
+    mutation ShareSavedCarts($cartId: String!, $token: String!) {
+        mpSaveCartShareCart(cart_id: $cartId, token: $token)
+    }
 `;
 
 export default {

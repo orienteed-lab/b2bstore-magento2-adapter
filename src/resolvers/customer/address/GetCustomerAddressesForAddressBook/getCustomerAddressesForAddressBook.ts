@@ -3,11 +3,11 @@ import { ClientProps } from 'src';
 import DEFAULT_OPERATIONS from './getCustomerAddressesForAddressBook.gql';
 
 interface GetCustomerAddressesForAddressBookProps {
-    isSignedIn: boolean,
-    hasNextFetchPolicy: boolean
+    isSignedIn?: boolean,
+    hasNextFetchPolicy?: boolean
 }
 
-const GetCustomerAddressesForAddressBook = (clientProps: ClientProps) => (resolverProps: GetCustomerAddressesForAddressBookProps) => {
+const GetCustomerAddressesForAddressBook = (clientProps: ClientProps) => (resolverProps: GetCustomerAddressesForAddressBookProps = {hasNextFetchPolicy: false}) => {
     const { mergeOperations, useQuery } = clientProps;
     const { hasNextFetchPolicy, isSignedIn } = resolverProps;
 
@@ -27,7 +27,7 @@ const GetCustomerAddressesForAddressBook = (clientProps: ClientProps) => (resolv
             skip: !isSignedIn
         });
 
-        return { data, loading };
+        return { data, loading, getCustomerAddressesQuery: getCustomerAddressesForAddressBookQuery};
     }
 };
 

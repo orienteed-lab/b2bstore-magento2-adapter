@@ -134,3 +134,4 @@ export { default as updateWishlist } from './customer/wishlist/UpdateWishlist/up
 export { default as setGuestShipping } from './cart/SetGuestShipping/setGuestShipping';
 export { default as setGuestEmailOnCart } from './cart/SetGuestEmailOnCart/setGuestEmailOnCart';
 export { default as isEmailAvailable } from './customer/IsEmailAvailable/isEmailAvailable';
+export { default as getPriceSummary } from './cart/GetPriceSummary/getPriceSummary';

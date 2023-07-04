@@ -134,7 +134,8 @@ import {
     getWebkulPaymentCreditSystemConfig,
     setGuestShipping,
     setGuestEmailOnCart,
-    isEmailAvailable
+    isEmailAvailable,
+    getPriceSummary
 } from './resolvers';
 
 export interface ClientProps {
@@ -285,6 +286,7 @@ export const getResolvers = (clientProps: ClientProps) => {
         getWebkulPaymentCreditSystemConfig: getWebkulPaymentCreditSystemConfig(clientProps),
         setGuestShipping: setGuestShipping(clientProps),
         setGuestEmailOnCart: setGuestEmailOnCart(clientProps),
-        isEmailAvailable: isEmailAvailable(clientProps)
+        isEmailAvailable: isEmailAvailable(clientProps),
+        getPriceSummary: getPriceSummary(clientProps)
     };
 };

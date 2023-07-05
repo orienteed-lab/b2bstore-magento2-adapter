@@ -1,10 +1,14 @@
 import { ClientProps } from 'src';
 import { GetPaymentNonceQueryVariables } from '@schema';
 
-const GetPaymentNonce = (clientProps: ClientProps) => (resolverProps: GetPaymentNonceQueryVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './getPaymentNonce.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const GetPaymentNonce = (clientProps: ClientProps) => (resolverProps: GetPaymentNonceQueryVariables) => {
+    const { mergeOperations } = clientProps;
+
+    const { getPaymentNonceQuery } = mergeOperations(DEFAULT_OPERATIONS);
+
+    return { getPaymentNonceQuery };
 };
 
 export default GetPaymentNonce;

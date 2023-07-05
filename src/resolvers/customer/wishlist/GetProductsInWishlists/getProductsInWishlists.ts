@@ -2,14 +2,25 @@ import { ClientProps } from 'src';
 
 import DEFAULT_OPERATIONS from './getProductsInWishlists.gql';
 
-const GetProductsInWishlists = (clientProps: ClientProps) => () => {
-    const { mergeOperations, useQuery } = clientProps;
+interface GetProductsInWishlistsProps {
+    performQuery?: boolean;
+}
 
-    const { getProductsInWishlistsQuery } = mergeOperations(DEFAULT_OPERATIONS);
+const GetProductsInWishlists =
+    (clientProps: ClientProps) =>
+    (resolverProps: GetProductsInWishlistsProps = { performQuery: true }) => {
+        const { mergeOperations, useQuery } = clientProps;
+        const { performQuery } = resolverProps;
 
-    const { client, data } = useQuery(getProductsInWishlistsQuery);
+        const { getProductsInWishlistsQuery } = mergeOperations(DEFAULT_OPERATIONS);
 
-    return { data, client };
-};
+        if (!performQuery) {
+            return { getProductsInWishlistsQuery };
+        }
+
+        const { client, data } = useQuery(getProductsInWishlistsQuery);
+
+        return { data, client, getProductsInWishlistsQuery };
+    };
 
 export default GetProductsInWishlists;

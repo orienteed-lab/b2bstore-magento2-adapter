@@ -1,10 +1,40 @@
 import { ClientProps } from 'src';
 import { SetCustomerAddressIdOnCartMutationVariables } from '@schema';
 
-const SetCustomerAddressIdOnCart = (clientProps: ClientProps) => (resolverProps: SetCustomerAddressIdOnCartMutationVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './setCustomerAddressIdOnCart.gql';
 
-    return { data: {}, loading: false, error: undefined };
+interface SetCustomerAddressIdOnCartProps extends SetCustomerAddressIdOnCartMutationVariables {
+    onSuccess?: any,
+    hasOnSuccess: boolean
+}
+
+const SetCustomerAddressIdOnCart = (clientProps: ClientProps) => (resolverProps: SetCustomerAddressIdOnCartProps) => {
+    const { backendEdition, mergeOperations, useMutation } = clientProps;
+    const { hasOnSuccess } = resolverProps;
+
+    const { setCustomerAddressIdOnCartMutationCE, setCustomerAddressIdOnCartMutationEE } = mergeOperations(DEFAULT_OPERATIONS);
+    const setCustomerAddressIdOnCartMutation = backendEdition === 'EE' ? setCustomerAddressIdOnCartMutationEE : setCustomerAddressIdOnCartMutationCE;
+
+    if (hasOnSuccess) {
+        const { onSuccess } = resolverProps;
+        const [
+            setCustomerAddressOnCart,
+            { error, loading }
+        ] = useMutation(setCustomerAddressIdOnCartMutation, {
+            onCompleted: () => {
+                onSuccess();
+            }
+        });
+
+        return {setCustomerAddressOnCart, error, loading }
+    } else {
+        const [setDefaultAddressOnCart, { loading }] = useMutation(
+            setCustomerAddressIdOnCartMutation
+        );
+
+        return {setDefaultAddressOnCart, loading}
+    }
+
 };
 
 export default SetCustomerAddressIdOnCart;

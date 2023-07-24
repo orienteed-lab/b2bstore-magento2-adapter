@@ -1,9 +1,18 @@
 import { ClientProps } from 'src';
 
-const GetConfigDetailsForSavedCarts = (clientProps: ClientProps) => () => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './getConfigDetailsForSavedCarts.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const GetConfigDetailsForSavedCarts = (clientProps: ClientProps) => () => {
+    const { mergeOperations, useQuery } = clientProps;
+
+    const { getConfigDetailsForSavedCartsQuery } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const { data } = useQuery(getConfigDetailsForSavedCartsQuery, {
+        fetchPolicy: 'cache-and-network',
+        nextFetchPolicy: 'cache-first'
+    });
+
+    return { data };
 };
 
 export default GetConfigDetailsForSavedCarts;

@@ -1,10 +1,27 @@
 import { ClientProps } from 'src';
 import { GetCmsDynamicBlocksQueryVariables } from '@schema';
 
-const GetCmsDynamicBlocks = (clientProps: ClientProps) => (resolverProps: GetCmsDynamicBlocksQueryVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './getCmsDynamicBlocks.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const GetCmsDynamicBlocks = (clientProps: ClientProps) => (resolverProps: GetCmsDynamicBlocksQueryVariables) => {
+    const { useQuery, mergeOperations } = clientProps;
+    const { cartId, productId, type, locations, uids } = resolverProps;
+
+    const operations = mergeOperations(DEFAULT_OPERATIONS);
+    const { getCmsDynamicBlocksQuery } = operations;
+
+    const { client, data, loading, error, refetch } = useQuery(getCmsDynamicBlocksQuery, {
+        variables: {
+            cartId,
+            productId,
+            type,
+            locations,
+            uids
+        },
+        skip: !cartId
+    });
+
+    return { client, data, loading, error, refetch };
 };
 
 export default GetCmsDynamicBlocks;

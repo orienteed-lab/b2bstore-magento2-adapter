@@ -1,11 +1,20 @@
 import { ClientProps } from 'src';
 import { GetAvailableSortMethodsByCategoryQueryVariables } from '@schema';
 
+import DEFAULT_OPERATIONS from './getAvailableSortMethodsByCategory.gql';
+
 const GetAvailableSortMethodsByCategory =
     (clientProps: ClientProps) => (resolverProps: GetAvailableSortMethodsByCategoryQueryVariables) => {
-        // Look docs for more info about how to fill this function
+        const { mergeOperations, useLazyQuery } = clientProps;
 
-        return { data: {}, loading: false, error: undefined };
+        const { getAvailableSortMethodsByCategoryQuery } = mergeOperations(DEFAULT_OPERATIONS);
+
+        const [getSortMethods, { data }] = useLazyQuery(getAvailableSortMethodsByCategoryQuery, {
+            fetchPolicy: 'cache-and-network',
+            nextFetchPolicy: 'cache-first'
+        });
+
+        return { getSortMethods, data };
     };
 
 export default GetAvailableSortMethodsByCategory;

@@ -1,10 +1,16 @@
 import { ClientProps } from 'src';
 import { DeleteSubmittedQuoteMutationVariables } from '@schema';
 
-const DeleteSubmittedQuote = (clientProps: ClientProps) => (resolverProps: DeleteSubmittedQuoteMutationVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './deleteSubmittedQuote.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const DeleteSubmittedQuote = (clientProps: ClientProps) => (resolverProps: DeleteSubmittedQuoteMutationVariables) => {
+    const { mergeOperations, useMutation } = clientProps;
+
+    const { deleteSubmittedQuoteMutation } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const [deleteSubmittedMpQuote] = useMutation(deleteSubmittedQuoteMutation);
+
+    return { deleteSubmittedMpQuote };
 };
 
 export default DeleteSubmittedQuote;

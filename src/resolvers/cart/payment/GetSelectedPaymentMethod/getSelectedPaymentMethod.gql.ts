@@ -1,7 +1,15 @@
 import { gql } from '@apollo/client';
 
 export const GET_SELECTED_PAYMENT_METHOD = gql`
-    # Your query here
+    query GetSelectedPaymentMethod($cartId: String!) {
+        cart(cart_id: $cartId) {
+            id
+            selected_payment_method {
+                code
+                title
+            }
+        }
+    }
 `;
 
 export default {

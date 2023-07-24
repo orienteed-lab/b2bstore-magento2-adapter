@@ -1,10 +1,24 @@
 import { ClientProps } from 'src';
 import { SetDefaultBillingAddressMutationVariables } from '@schema';
 
-const SetDefaultBillingAddress = (clientProps: ClientProps) => (resolverProps: SetDefaultBillingAddressMutationVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './setDefaultBillingAddress.gql'
 
-    return { data: {}, loading: false, error: undefined };
+const SetDefaultBillingAddress = (clientProps: ClientProps) => (resolverProps: SetDefaultBillingAddressMutationVariables) => {
+    const { mergeOperations, useMutation, backendEdition } = clientProps;
+
+    const { setDefaultBillingAddressMutationCE, setDefaultBillingAddressMutationEE } = mergeOperations(DEFAULT_OPERATIONS);
+    const setDefaultBillingAddressMutation = backendEdition === 'EE' ? setDefaultBillingAddressMutationEE : setDefaultBillingAddressMutationCE;
+
+    const [
+        updateDefaultBillingAddress,
+        {
+            error,
+            called,
+            loading
+        }
+    ] = useMutation(setDefaultBillingAddressMutation);
+
+    return { updateDefaultBillingAddress, loading, error, called };
 };
 
 export default SetDefaultBillingAddress;

@@ -1,9 +1,23 @@
 import { ClientProps } from 'src';
 
-const SubscribeToNewsletter = (clientProps: ClientProps) => () => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './subscribeToNewsletter.gql';
 
-    return { data: {}, loading: false, error: undefined };
+interface SubscribeToNewsletterProps {
+    setNewsLetterError?: any
+}
+
+const SubscribeToNewsletter = (clientProps: ClientProps) => (resolverProps: SubscribeToNewsletterProps) => {
+    const { mergeOperations, useMutation } = clientProps;
+    const { setNewsLetterError } = resolverProps;
+
+    const { subscribeToNewsletterMutation } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const [subscribeNewsLetter, { data, loading }] = useMutation(subscribeToNewsletterMutation, {
+        fetchPolicy: 'no-cache',
+        onError: setNewsLetterError
+    });
+
+    return { subscribeNewsLetter, data, loading };
 };
 
 export default SubscribeToNewsletter;

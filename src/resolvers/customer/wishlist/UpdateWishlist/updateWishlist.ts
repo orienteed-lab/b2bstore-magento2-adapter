@@ -1,10 +1,16 @@
 import { ClientProps } from 'src';
 import { UpdateWishlistMutationVariables } from '@schema';
 
-const UpdateWishlist = (clientProps: ClientProps) => (resolverProps: UpdateWishlistMutationVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './updateWishlist.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const UpdateWishlist = (clientProps: ClientProps) => (resolverProps: UpdateWishlistMutationVariables) => {
+    const { mergeOperations, useMutation } = clientProps;
+
+    const { updateWishlistMutation } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const [updateWishlist, { error, loading }] = useMutation(updateWishlistMutation);
+
+    return { updateWishlist, loading, error };
 };
 
 export default UpdateWishlist;

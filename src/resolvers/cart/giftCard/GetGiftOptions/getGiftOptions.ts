@@ -1,10 +1,22 @@
 import { ClientProps } from 'src';
 import { GetGiftOptionsQueryVariables } from '@schema';
 
-const GetGiftOptions = (clientProps: ClientProps) => (resolverProps: GetGiftOptionsQueryVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './getGiftOptions.gql'; 
 
-    return { data: {}, loading: false, error: undefined };
+const GetGiftOptions = (clientProps: ClientProps) => (resolverProps: GetGiftOptionsQueryVariables) => {
+    const { mergeOperations, useQuery } = clientProps;
+    const { cartId } = resolverProps;
+
+    const { getGiftOptionsQuery } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const { data, error, loading } = useQuery(getGiftOptionsQuery, {
+        fetchPolicy: 'cache-and-network',
+        nextFetchPolicy: 'cache-first',
+        skip: !cartId,
+        variables: { cartId }
+    });
+
+    return { data, loading, error };
 };
 
 export default GetGiftOptions;

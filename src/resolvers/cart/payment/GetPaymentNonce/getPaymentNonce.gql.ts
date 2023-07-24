@@ -1,7 +1,12 @@
 import { gql } from '@apollo/client';
 
 export const GET_PAYMENT_NONCE = gql`
-    # Your query here
+    query GetPaymentNonce($cartId: String!) {
+        cart(cart_id: $cartId) @client {
+            id
+            paymentNonce
+        }
+    }
 `;
 
 export default {

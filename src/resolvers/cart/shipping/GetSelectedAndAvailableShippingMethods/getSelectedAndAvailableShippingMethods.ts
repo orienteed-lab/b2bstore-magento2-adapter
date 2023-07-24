@@ -1,11 +1,26 @@
 import { ClientProps } from 'src';
 import { GetSelectedAndAvailableShippingMethodsQueryVariables } from '@schema';
 
+import DEFAULT_OPERATIONS from './getSelectedAndAvailableShippingMethods.gql';
+
 const GetSelectedAndAvailableShippingMethods =
     (clientProps: ClientProps) => (resolverProps: GetSelectedAndAvailableShippingMethodsQueryVariables) => {
-        // Look docs for more info about how to fill this function
+        const { mergeOperations, useQuery } = clientProps;
+        const { cartId } = resolverProps;
 
-        return { data: {}, loading: false, error: undefined };
+        const { getSelectedAndAvailableShippingMethodsQuery } = mergeOperations(DEFAULT_OPERATIONS);
+
+        const { data, loading } = useQuery(
+            getSelectedAndAvailableShippingMethodsQuery,
+            {
+                fetchPolicy: 'cache-and-network',
+                nextFetchPolicy: 'cache-first',
+                skip: !cartId,
+                variables: { cartId }
+            }
+        );
+
+        return { data, loading };
     };
 
 export default GetSelectedAndAvailableShippingMethods;

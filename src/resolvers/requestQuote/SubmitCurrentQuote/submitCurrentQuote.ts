@@ -1,9 +1,15 @@
 import { ClientProps } from 'src';
 
-const SubmitCurrentQuote = (clientProps: ClientProps) => () => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './submitCurrentQuote.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const SubmitCurrentQuote = (clientProps: ClientProps) => () => {
+    const { mergeOperations, useMutation } = clientProps;
+
+    const { submitCurrentQuoteMutation } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const [submitCurrentQuote] = useMutation(submitCurrentQuoteMutation);
+
+    return { submitCurrentQuote };
 };
 
 export default SubmitCurrentQuote;

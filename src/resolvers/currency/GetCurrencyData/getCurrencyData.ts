@@ -1,9 +1,19 @@
 import { ClientProps } from 'src';
 
-const GetCurrencyData = (clientProps: ClientProps) => () => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './getCurrencyData.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const GetCurrencyData = (clientProps: ClientProps) => () => {
+    const { useQuery, mergeOperations } = clientProps;
+
+    const operations = mergeOperations(DEFAULT_OPERATIONS);
+    const { getCurrencyDataQuery } = operations;
+
+    const { data, loading, error } = useQuery(getCurrencyDataQuery, {
+        fetchPolicy: 'cache-and-network',
+        nextFetchPolicy: 'cache-first'
+    });
+
+    return { data, loading, error };
 };
 
 export default GetCurrencyData;

@@ -1,10 +1,23 @@
 import { ClientProps } from 'src';
 import { GetCustomerOrdersQueryVariables } from '@schema';
 
-const GetCustomerOrders = (clientProps: ClientProps) => (resolverProps: GetCustomerOrdersQueryVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './getCustomerOrders.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const GetCustomerOrders = (clientProps: ClientProps) => (resolverProps: GetCustomerOrdersQueryVariables) => {
+    const { mergeOperations, useQuery } = clientProps;
+    const { pageSize, filter } = resolverProps;
+
+    const { getCustomerOrdersQuery } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const { data, error, loading } = useQuery(getCustomerOrdersQuery, {
+        fetchPolicy: 'cache-and-network',
+        variables: {
+            filter,
+            pageSize
+        }
+    });
+
+    return { data, loading, error };
 };
 
 export default GetCustomerOrders;

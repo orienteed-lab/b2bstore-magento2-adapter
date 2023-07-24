@@ -1,10 +1,16 @@
 import { ClientProps } from 'src';
 import { GetImageBySkuQueryVariables } from '@schema';
 
-const GetImageBySku = (clientProps: ClientProps) => (resolverProps: GetImageBySkuQueryVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './getImageBySku.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const GetImageBySku = (clientProps: ClientProps) => (resolverProps: GetImageBySkuQueryVariables) => {
+    const { mergeOperations, useAwaitQuery } = clientProps;
+
+    const { getImageBySkuQuery } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const fetchProductImage = useAwaitQuery(getImageBySkuQuery);
+
+    return { fetchProductImage };
 };
 
 export default GetImageBySku;

@@ -1,9 +1,15 @@
 import { gql } from '@apollo/client';
 
 export const SET_NEWSLETTER_SUBSCRIPTION = gql`
-    # Your query here
+    mutation SetNewsletterSubscription($isSubscribed: Boolean!) {
+        updateCustomer(input: { is_subscribed: $isSubscribed }) {
+            customer {
+                is_subscribed
+            }
+        }
+    }
 `;
 
 export default {
-    subscribeToNewsletterMutation: SET_NEWSLETTER_SUBSCRIPTION
+    setNewsletterSubscriptionMutation: SET_NEWSLETTER_SUBSCRIPTION
 };

@@ -1,10 +1,20 @@
 import { ClientProps } from 'src';
 import { SetShippingAddressMutationVariables } from '@schema';
 
-const SetShippingAddress = (clientProps: ClientProps) => (resolverProps: SetShippingAddressMutationVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './setShippingAddress.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const SetShippingAddress = (clientProps: ClientProps) => (resolverProps: SetShippingAddressMutationVariables) => {
+    const { backendEdition, mergeOperations, useMutation } = clientProps;
+
+    const { setShippingAddressMutationCE, setShippingAddressMutationEE } = mergeOperations(DEFAULT_OPERATIONS);
+    const setShippingAddressMutation = backendEdition === 'EE' ? setShippingAddressMutationEE : setShippingAddressMutationCE;
+
+    const [
+        setShippingAddress,
+        { called, error, loading }
+    ] = useMutation(setShippingAddressMutation);
+
+    return { setShippingAddress, called, loading, error };
 };
 
 export default SetShippingAddress;

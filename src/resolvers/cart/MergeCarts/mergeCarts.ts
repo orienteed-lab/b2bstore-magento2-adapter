@@ -1,10 +1,16 @@
 import { ClientProps } from 'src';
 import { MergeCartsMutationVariables } from '@schema';
 
-const MergeCarts = (clientProps: ClientProps) => (resolverProps: MergeCartsMutationVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './mergeCarts.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const MergeCarts = (clientProps: ClientProps) => (resolverProps: MergeCartsMutationVariables) => {
+    const { mergeOperations, useMutation } = clientProps;
+
+    const { mergeCartsMutation } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const [mergeCarts] = useMutation(mergeCartsMutation);
+
+    return { mergeCarts };
 };
 
 export default MergeCarts;

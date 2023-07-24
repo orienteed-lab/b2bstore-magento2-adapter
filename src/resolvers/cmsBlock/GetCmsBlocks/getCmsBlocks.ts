@@ -1,10 +1,23 @@
 import { ClientProps } from 'src';
 import { GetCmsBlocksQueryVariables } from '@schema';
 
-const GetCmsBlocks = (clientProps: ClientProps) => (resolverProps: GetCmsBlocksQueryVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './getCmsBlocks.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const GetCmsBlocks = (clientProps: ClientProps) => (resolverProps: GetCmsBlocksQueryVariables) => {
+    const { useQuery, mergeOperations } = clientProps;
+    const { identifiers } = resolverProps;
+
+    const operations = mergeOperations(DEFAULT_OPERATIONS);
+    const { getCmsBlocksQuery } = operations;
+
+    const { data, loading, error } = useQuery(getCmsBlocksQuery, {
+        variables: {
+            identifiers
+        },
+        fetchPolicy: 'cache-and-network'
+    });
+
+    return { data, loading, error };
 };
 
 export default GetCmsBlocks;

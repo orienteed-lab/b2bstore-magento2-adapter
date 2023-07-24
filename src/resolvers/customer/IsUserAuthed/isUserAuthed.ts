@@ -1,10 +1,16 @@
 import { ClientProps } from 'src';
 import { IsUserAuthedQueryVariables } from '@schema';
 
-const IsUserAuthed = (clientProps: ClientProps) => (resolverProps: IsUserAuthedQueryVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './isUserAuthed.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const IsUserAuthed = (clientProps: ClientProps) => (resolverProps: IsUserAuthedQueryVariables) => {
+    const { mergeOperations, useAwaitQuery } = clientProps;
+
+    const { isUserAuthedQuery } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const fetchIsUserAuthed = useAwaitQuery(isUserAuthedQuery);
+
+    return { fetchIsUserAuthed };
 };
 
 export default IsUserAuthed;

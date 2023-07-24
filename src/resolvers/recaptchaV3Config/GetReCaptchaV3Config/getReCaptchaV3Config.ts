@@ -1,9 +1,18 @@
 import { ClientProps } from 'src';
 
-const GetReCaptchaV3Config = (clientProps: ClientProps) => () => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './getReCaptchaV3Config.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const GetReCaptchaV3Config = (clientProps: ClientProps) => () => {
+    const { useQuery, mergeOperations } = clientProps;
+
+    const operations = mergeOperations(DEFAULT_OPERATIONS);
+    const { getReCaptchaV3ConfigQuery } = operations;
+
+    const { data, loading, error } = useQuery(getReCaptchaV3ConfigQuery, {
+        fetchPolicy: 'cache-and-network'
+    });
+
+    return { data, loading, error };
 };
 
 export default GetReCaptchaV3Config;

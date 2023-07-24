@@ -1,7 +1,22 @@
 import { gql } from '@apollo/client';
 
+import { WishlistItemFragment } from '../../../fragments/wishlistItemFragments.gql';
+
 export const GET_WISHLIST_PRODUCTS = gql`
-    # Your query here
+    query GetWishlistProducts($id: ID!, $currentPage: Int) {
+        customer {
+            wishlist_v2(id: $id) {
+                id
+                items_v2(currentPage: $currentPage) {
+                    items {
+                        id
+                        ...WishlistItemFragment
+                    }
+                }
+            }
+        }
+    }
+    ${WishlistItemFragment}
 `;
 
 export default {

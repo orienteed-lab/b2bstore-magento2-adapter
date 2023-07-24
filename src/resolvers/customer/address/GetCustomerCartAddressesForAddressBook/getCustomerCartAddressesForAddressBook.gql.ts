@@ -1,7 +1,15 @@
 import { gql } from '@apollo/client';
 
+import { ShippingInformationFragment } from '../../../fragments/shippingInformationFragments.gql';
+
 export const GET_CUSTOMER_CART_ADDRESSES = gql`
-    # Your query here
+    query GetCustomerCartAddressesForAddressBook {
+        customerCart {
+            id
+            ...ShippingInformationFragment
+        }
+    }
+    ${ShippingInformationFragment}
 `;
 
 export default {

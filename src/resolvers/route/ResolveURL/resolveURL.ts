@@ -1,10 +1,17 @@
 import { ClientProps } from 'src';
 import { ResolveUrlQueryVariables } from '@schema';
 
-const ResolveURL = (clientProps: ClientProps) => (resolverProps: ResolveUrlQueryVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './resolveURL.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const ResolveURL = (clientProps: ClientProps) => (resolverProps: ResolveUrlQueryVariables) => {
+    const { useLazyQuery, mergeOperations } = clientProps;
+
+    const operations = mergeOperations(DEFAULT_OPERATIONS);
+    const { resolveUrlQuery } = operations;
+
+    const [runQuery, { data, loading, error, called }] = useLazyQuery(resolveUrlQuery);
+
+    return { runQuery, data, loading, error, called, resolveUrlQuery };
 };
 
 export default ResolveURL;

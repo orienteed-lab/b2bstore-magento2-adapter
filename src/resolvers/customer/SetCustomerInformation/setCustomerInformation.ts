@@ -1,10 +1,16 @@
 import { ClientProps } from 'src';
 import { SetCustomerInformationMutationVariables } from '@schema';
 
-const SetCustomerInformation = (clientProps: ClientProps) => (resolverProps: SetCustomerInformationMutationVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './setCustomerInformation.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const SetCustomerInformation = (clientProps: ClientProps) => (resolverProps: SetCustomerInformationMutationVariables) => {
+    const { mergeOperations, useMutation } = clientProps;
+
+    const { setCustomerInformationMutation } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const [setCustomerInformation, { error, loading }] = useMutation(setCustomerInformationMutation);
+
+    return { setCustomerInformation, loading, error };
 };
 
 export default SetCustomerInformation;

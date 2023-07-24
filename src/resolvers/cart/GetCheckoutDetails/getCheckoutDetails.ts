@@ -1,10 +1,26 @@
 import { ClientProps } from 'src';
 import { GetCheckoutDetailsQueryVariables } from '@schema';
 
-const GetCheckoutDetails = (clientProps: ClientProps) => (resolverProps: GetCheckoutDetailsQueryVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './getCheckoutDetails.gql'
 
-    return { data: {}, loading: false, error: undefined };
+const GetCheckoutDetails = (clientProps: ClientProps) => (resolverProps: GetCheckoutDetailsQueryVariables) => {
+    const { mergeOperations, useQuery } = clientProps;
+    const { cartId } = resolverProps;
+
+    const { getCheckoutDetailsQuery } = mergeOperations(DEFAULT_OPERATIONS);
+    const { data, networkStatus } = useQuery(getCheckoutDetailsQuery, {
+        /**
+         * Skip fetching checkout details if the `cartId`
+         * is a falsy value.
+         */
+        skip: !cartId,
+        notifyOnNetworkStatusChange: true,
+        variables: {
+            cartId
+        }
+    })
+
+    return { data, networkStatus };
 };
 
 export default GetCheckoutDetails;

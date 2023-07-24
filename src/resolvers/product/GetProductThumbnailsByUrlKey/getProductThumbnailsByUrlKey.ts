@@ -1,10 +1,23 @@
 import { ClientProps } from 'src';
 import { GetProductThumbnailsByUrlKeyQueryVariables } from '@schema';
 
-const GetProductThumbnailsByUrlKey = (clientProps: ClientProps) => (resolverProps: GetProductThumbnailsByUrlKeyQueryVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './getProductThumbnailsByUrlKey.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const GetProductThumbnailsByUrlKey = (clientProps: ClientProps) => (resolverProps: GetProductThumbnailsByUrlKeyQueryVariables) => {
+    const { mergeOperations, useQuery } = clientProps;
+    const { urlKeys } = resolverProps;
+
+    const { getProductThumbnailsByUrlKeyQuery } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const { data, loading } = useQuery(getProductThumbnailsByUrlKeyQuery, {
+        fetchPolicy: 'cache-and-network',
+        nextFetchPolicy: 'cache-first',
+        variables: {
+            urlKeys
+        }
+    });
+
+    return { data, loading };
 };
 
 export default GetProductThumbnailsByUrlKey;

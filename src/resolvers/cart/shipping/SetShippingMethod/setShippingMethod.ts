@@ -1,10 +1,33 @@
 import { ClientProps } from 'src';
 import { SetShippingMethodMutationVariables } from '@schema';
 
-const SetShippingMethod = (clientProps: ClientProps) => (resolverProps: SetShippingMethodMutationVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './setShippingMethod.gql';
 
-    return { data: {}, loading: false, error: undefined };
+interface SetShippingMethodProps extends SetShippingMethodMutationVariables {
+    onSuccess: any;
+    hasOnSuccess: boolean;
+}
+
+const SetShippingMethod = (clientProps: ClientProps) => (resolverProps: SetShippingMethodProps) => {
+    const { backendEdition, mergeOperations, useMutation } = clientProps;
+    const { onSuccess, hasOnSuccess } = resolverProps;
+
+    const { setShippingMethodMutationCE, setShippingMethodMutationEE } = mergeOperations(DEFAULT_OPERATIONS);
+    const setShippingMethodMutation = backendEdition === 'EE' ? setShippingMethodMutationEE : setShippingMethodMutationCE;
+
+    if (hasOnSuccess) {
+        const [setShippingMethodCall, { error, loading }] = useMutation(setShippingMethodMutation, {
+            onCompleted: () => {
+                onSuccess();
+            }
+        });
+
+        return { setShippingMethodCall, error, loading };
+    } else {
+        const [setShippingMethod, { called, loading }] = useMutation(setShippingMethodMutation);
+
+        return { setShippingMethod, called, loading };
+    }
 };
 
 export default SetShippingMethod;

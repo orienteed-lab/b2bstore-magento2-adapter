@@ -1,10 +1,33 @@
 import { ClientProps } from 'src';
 import { GetBillingAddressQueryVariables } from '@schema';
 
-const GetBillingAddress = (clientProps: ClientProps) => (resolverProps: GetBillingAddressQueryVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './getBillingAddress.gql'
 
-    return { data: {}, loading: false, error: undefined };
+interface GetBillingAddressProps extends GetBillingAddressQueryVariables {
+    type: 'request';
+}
+
+const GetBillingAddress = (clientProps: ClientProps) => (resolverProps: GetBillingAddressProps) => {
+    const { mergeOperations, useLazyQuery, useQuery } = clientProps;
+    const { cartId, type } = resolverProps;
+
+    const { getBillingAddressQuery } = mergeOperations(DEFAULT_OPERATIONS);
+
+    if(type === 'request'){
+        const [loadBillingAddressQuery, { data }] = useLazyQuery(getBillingAddressQuery, {
+            skip: !cartId,
+            variables: { cartId }
+        });
+    
+        return { loadBillingAddressQuery, data };
+    }
+
+    const { data } = useQuery(getBillingAddressQuery, {
+        skip: !cartId,
+        variables: { cartId }
+    });
+
+    return { data };
 };
 
 export default GetBillingAddress;

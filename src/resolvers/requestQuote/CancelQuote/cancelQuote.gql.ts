@@ -1,7 +1,9 @@
 import { gql } from '@apollo/client';
 
 export const CANCEL_QUOTE = gql`
-    # Your query here
+    mutation CancelQuote($quoteId: Int!) {
+        cancelMpQuote(quote_id: $quoteId)
+    }
 `;
 
 export default {

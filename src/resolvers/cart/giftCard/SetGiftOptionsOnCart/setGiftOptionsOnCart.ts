@@ -1,10 +1,16 @@
 import { ClientProps } from 'src';
 import { SetGiftOptionsOnCartMutationVariables } from '@schema';
 
-const SetGiftOptionsOnCart = (clientProps: ClientProps) => (resolverProps: SetGiftOptionsOnCartMutationVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './setGiftOptionsOnCart.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const SetGiftOptionsOnCart = (clientProps: ClientProps) => (resolverProps: SetGiftOptionsOnCartMutationVariables) => {
+    const { mergeOperations, useMutation } = clientProps;
+
+    const { setGiftOptionsOnCartMutation } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const [setGiftOptionsOnCart, { error }] = useMutation(setGiftOptionsOnCartMutation);
+
+    return { setGiftOptionsOnCart, error };
 };
 
 export default SetGiftOptionsOnCart;

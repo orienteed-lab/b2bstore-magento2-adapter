@@ -1,9 +1,28 @@
 import { ClientProps } from 'src';
 
-const GetCustomerCartAddressesForAddressBook = (clientProps: ClientProps) => () => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './getCustomerCartAddressesForAddressBook.gql';
 
-    return { data: {}, loading: false, error: undefined };
+interface GetCustomerCartAddressesForAddressBookProps {
+    isSignedIn: boolean
+}
+
+const GetCustomerCartAddressesForAddressBook = (clientProps: ClientProps) => (resolverProps: GetCustomerCartAddressesForAddressBookProps) => {
+    const { mergeOperations, useQuery } = clientProps;
+    const { isSignedIn } = resolverProps;
+    
+    const { getCustomerCartAddressesForAddressBookQuery } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const { data, loading } = useQuery(
+        getCustomerCartAddressesForAddressBookQuery,
+        {
+            fetchPolicy: 'cache-and-network',
+            nextFetchPolicy: 'cache-first',
+            skip: !isSignedIn
+        }
+    );
+
+
+    return { data, loading };
 };
 
 export default GetCustomerCartAddressesForAddressBook;

@@ -1,11 +1,27 @@
 import { ClientProps } from 'src';
 import { GetProductDetailForCmsDynamicBlockByUrlKeyQueryVariables } from '@schema';
 
-const GetProductDetailForCmsDynamicBlockByUrlKey =
-    (clientProps: ClientProps) => (resolverProps: GetProductDetailForCmsDynamicBlockByUrlKeyQueryVariables) => {
-        // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './getProductDetailForCmsDynamicBlockByUrlKey.gql';
 
-        return { data: {}, loading: false, error: undefined };
+interface GetProductDetailForCmsDynamicBlockByUrlKeyProps extends GetProductDetailForCmsDynamicBlockByUrlKeyQueryVariables {
+    storeConfigData: any
+}
+
+const GetProductDetailForCmsDynamicBlockByUrlKey =
+    (clientProps: ClientProps) => (resolverProps: GetProductDetailForCmsDynamicBlockByUrlKeyProps) => {
+        const { mergeOperations, useQuery } = clientProps;
+        const { urlKey, storeConfigData } = resolverProps;
+
+        const { getProductDetailForCmsDynamicBlockByUrlKeyQuery } = mergeOperations(DEFAULT_OPERATIONS);
+
+        const { data, loading } = useQuery(getProductDetailForCmsDynamicBlockByUrlKeyQuery, {
+            skip: !storeConfigData,
+            variables: {
+                urlKey
+            }
+        });
+
+        return { data, loading };
     };
 
 export default GetProductDetailForCmsDynamicBlockByUrlKey;

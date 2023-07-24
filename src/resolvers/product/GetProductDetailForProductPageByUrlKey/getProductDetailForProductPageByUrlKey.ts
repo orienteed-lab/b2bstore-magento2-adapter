@@ -1,11 +1,29 @@
 import { ClientProps } from 'src';
 import { GetProductDetailForProductPageByUrlKeyQueryVariables } from '@schema';
 
-const GetProductDetailForProductPageByUrlKey =
-    (clientProps: ClientProps) => (resolverProps: GetProductDetailForProductPageByUrlKeyQueryVariables) => {
-        // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './getProductDetailForProductPageByUrlKey.gql';
 
-        return { data: {}, loading: false, error: undefined };
+interface GetProductDetailForProductPageByUrlKeyProps extends GetProductDetailForProductPageByUrlKeyQueryVariables {
+    storeConfigData?: any
+}
+
+const GetProductDetailForProductPageByUrlKey =
+    (clientProps: ClientProps) => (resolverProps: GetProductDetailForProductPageByUrlKeyProps = {storeConfigData: false, urlKey: ''}) => {
+        const { mergeOperations, useQuery } = clientProps;
+        const { urlKey, storeConfigData } = resolverProps;
+
+        const { getProductDetailForProductPageByUrlKeyQuery } = mergeOperations(DEFAULT_OPERATIONS);
+
+        const { error, loading, data, refetch } = useQuery(getProductDetailForProductPageByUrlKeyQuery, {
+            fetchPolicy: 'cache-and-network',
+            nextFetchPolicy: 'cache-first',
+            skip: !storeConfigData,
+            variables: {
+                urlKey
+            }
+        });
+
+        return { data, loading, error, refetch };
     };
 
 export default GetProductDetailForProductPageByUrlKey;

@@ -1,10 +1,17 @@
 import { ClientProps } from 'src';
 import { PlaceOrderMutationVariables } from '@schema';
 
-const PlaceOrder = (clientProps: ClientProps) => (resolverProps: PlaceOrderMutationVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './placeOrder.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const PlaceOrder = (clientProps: ClientProps) => (resolverProps: PlaceOrderMutationVariables) => {
+    const { useMutation, mergeOperations } = clientProps;
+
+    const operations = mergeOperations(DEFAULT_OPERATIONS);
+    const { placeOrderMutation } = operations;
+
+    const [runPlaceOrder, { data, loading, error }] = useMutation(placeOrderMutation);
+
+    return { runPlaceOrder, data, loading, error };
 };
 
 export default PlaceOrder;

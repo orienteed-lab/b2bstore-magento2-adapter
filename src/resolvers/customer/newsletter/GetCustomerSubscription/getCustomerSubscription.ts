@@ -1,10 +1,20 @@
 import { ClientProps } from 'src';
-import { SetNewsletterSubscriptionMutationVariables } from '@schema';
 
-const GetCustomerSubscription = (clientProps: ClientProps) => (resolverProps: SetNewsletterSubscriptionMutationVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './getCustomerSubscription.gql';
 
-    return { data: {}, loading: false, error: undefined };
+interface GetCustomerSubscriptionProps {
+    isSignedIn?: boolean;
+}
+
+const GetCustomerSubscription = (clientProps: ClientProps) => (resolverProps: GetCustomerSubscriptionProps) => {
+    const { mergeOperations, useQuery } = clientProps;
+    const { isSignedIn } = resolverProps;
+
+    const { getCustomerSubscriptionQuery } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const { data, error } = useQuery(getCustomerSubscriptionQuery, { skip: !isSignedIn });
+
+    return { data, error };
 };
 
 export default GetCustomerSubscription;

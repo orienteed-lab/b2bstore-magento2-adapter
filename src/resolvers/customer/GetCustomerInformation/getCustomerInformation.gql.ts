@@ -1,7 +1,14 @@
 import { gql } from '@apollo/client';
 
+import { AccountInformationPageFragment } from '../../fragments/accountInformationPageFragment.gql';
+
 export const GET_CUSTOMER_INFORMATION = gql`
-    # Your query here
+    query GetCustomerInformation {
+        customer {
+            ...AccountInformationPageFragment
+        }
+    }
+    ${AccountInformationPageFragment}
 `;
 
 export default {

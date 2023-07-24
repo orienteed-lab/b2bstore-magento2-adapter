@@ -1,10 +1,16 @@
 import { ClientProps } from 'src';
 import { SaveSavedCartsMutationVariables } from '@schema';
 
-const SaveSavedCarts = (clientProps: ClientProps) => (resolverProps: SaveSavedCartsMutationVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './saveSavedCarts.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const SaveSavedCarts = (clientProps: ClientProps) => (resolverProps: SaveSavedCartsMutationVariables) => {
+    const { mergeOperations, useMutation } = clientProps;
+
+    const { saveSavedCartsMutation } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const [getMpSaveCart] = useMutation(saveSavedCartsMutation);
+
+    return { getMpSaveCart };
 };
 
 export default SaveSavedCarts;

@@ -1,9 +1,15 @@
 import { ClientProps } from 'src';
 
-const DeleteCurrentQuote = (clientProps: ClientProps) => () => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './deleteCurrentQuote.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const DeleteCurrentQuote = (clientProps: ClientProps) => () => {
+    const { mergeOperations, useMutation } = clientProps;
+
+    const { deleteCurrentQuoteMutation } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const [deleteCurrentQuote] = useMutation(deleteCurrentQuoteMutation);
+
+    return { deleteCurrentQuote };
 };
 
 export default DeleteCurrentQuote;

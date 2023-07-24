@@ -131,7 +131,11 @@ import {
     saveSavedCarts,
     shareSavedCarts,
     getStoreConfig,
-    getWebkulPaymentCreditSystemConfig
+    getWebkulPaymentCreditSystemConfig,
+    setGuestShipping,
+    setGuestEmailOnCart,
+    isEmailAvailable,
+    getPriceSummary
 } from './resolvers';
 
 export interface ClientProps {
@@ -142,6 +146,7 @@ export interface ClientProps {
     useMutation: any;
     useQuery: any;
     useSubscription: any;
+    backendEdition: string;
 }
 
 export const getResolvers = (clientProps: ClientProps) => {
@@ -278,6 +283,10 @@ export const getResolvers = (clientProps: ClientProps) => {
         saveSavedCarts: saveSavedCarts(clientProps),
         shareSavedCarts: shareSavedCarts(clientProps),
         getStoreConfig: getStoreConfig(clientProps),
-        getWebkulPaymentCreditSystemConfig: getWebkulPaymentCreditSystemConfig(clientProps)
+        getWebkulPaymentCreditSystemConfig: getWebkulPaymentCreditSystemConfig(clientProps),
+        setGuestShipping: setGuestShipping(clientProps),
+        setGuestEmailOnCart: setGuestEmailOnCart(clientProps),
+        isEmailAvailable: isEmailAvailable(clientProps),
+        getPriceSummary: getPriceSummary(clientProps)
     };
 };

@@ -1,11 +1,18 @@
 import { ClientProps } from 'src';
 import { GetProductDetailForQuickOrderBySkuQueryVariables } from '@schema';
 
-const GetProductDetailForQuickOrderBySku =
-    (clientProps: ClientProps) => (resolverProps: GetProductDetailForQuickOrderBySkuQueryVariables) => {
-        // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './getProductDetailForQuickOrderBySku.gql'
 
-        return { data: {}, loading: false, error: undefined };
+const GetProductDetailForQuickOrderBySku =
+    (clientProps: ClientProps) => (resolverProps: GetProductDetailForQuickOrderBySkuQueryVariables = {sku: ''}) => {
+        const { mergeOperations, useAwaitQuery } = clientProps;
+
+        const operations = mergeOperations(DEFAULT_OPERATIONS);
+        const { getProductDetailForQuickOrderBySkuQuery } = operations;
+
+        const getproduct = useAwaitQuery(getProductDetailForQuickOrderBySkuQuery);
+
+        return { getproduct };
     };
 
 export default GetProductDetailForQuickOrderBySku;

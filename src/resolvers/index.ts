@@ -131,3 +131,7 @@ export { default as updateConfigurableOptions } from './product/UpdateConfigurab
 export { default as updateCustomerAddressInAddressBook } from './customer/address/UpdateCustomerAddressInAddressBook/updateCustomerAddressInAddressBook';
 export { default as updateQuote } from './requestQuote/UpdateQuote/updateQuote';
 export { default as updateWishlist } from './customer/wishlist/UpdateWishlist/updateWishlist';
+export { default as setGuestShipping } from './cart/SetGuestShipping/setGuestShipping';
+export { default as setGuestEmailOnCart } from './cart/SetGuestEmailOnCart/setGuestEmailOnCart';
+export { default as isEmailAvailable } from './customer/IsEmailAvailable/isEmailAvailable';
+export { default as getPriceSummary } from './cart/GetPriceSummary/getPriceSummary';

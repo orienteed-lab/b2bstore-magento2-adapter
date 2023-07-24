@@ -1,10 +1,16 @@
 import { ClientProps } from 'src';
 import { ApplyGiftCardToCartMutationVariables } from '@schema';
 
-const ApplyGiftCardToCart = (clientProps: ClientProps) => (resolverProps: ApplyGiftCardToCartMutationVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './applyGiftCardToCart.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const ApplyGiftCardToCart = (clientProps: ClientProps) => (resolverProps: ApplyGiftCardToCartMutationVariables) => {
+    const { mergeOperations, useMutation } = clientProps;
+
+    const { applyGiftCardToCartMutation } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const [applyCard, applyCardResult] = useMutation(applyGiftCardToCartMutation);
+
+    return { applyCard, applyCardResult };
 };
 
 export default ApplyGiftCardToCart;

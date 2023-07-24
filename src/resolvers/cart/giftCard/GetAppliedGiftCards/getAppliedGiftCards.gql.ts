@@ -1,7 +1,15 @@
 import { gql } from '@apollo/client';
 
+import { GiftCardFragmentEE } from '../../../fragments/giftCardFragments.gql';
+
 export const GET_APPLIED_GIFT_CARDS = gql`
-    # Your query here
+    query GetAppliedGiftCards($cartId: String!) {
+        cart(cart_id: $cartId) {
+            id
+            ...GiftCardFragment
+        }
+    }
+    ${GiftCardFragmentEE}
 `;
 
 export default {

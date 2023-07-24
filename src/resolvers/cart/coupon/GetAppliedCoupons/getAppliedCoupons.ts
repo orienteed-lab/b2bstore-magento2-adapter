@@ -1,10 +1,24 @@
 import { ClientProps } from 'src';
 import { GetAppliedCouponsQueryVariables } from '@schema';
 
-const GetAppliedCoupons = (clientProps: ClientProps) => (resolverProps: GetAppliedCouponsQueryVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './getAppliedCoupons.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const GetAppliedCoupons = (clientProps: ClientProps) => (resolverProps: GetAppliedCouponsQueryVariables) => {
+    const { mergeOperations, useQuery } = clientProps;
+    const { cartId } = resolverProps;
+
+    const { getAppliedCouponsQuery } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const { data, error } = useQuery(getAppliedCouponsQuery, {
+        fetchPolicy: 'cache-and-network',
+        nextFetchPolicy: 'cache-first',
+        skip: !cartId,
+        variables: {
+            cartId
+        }
+    });
+
+    return { data, error };
 };
 
 export default GetAppliedCoupons;

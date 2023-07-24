@@ -1,10 +1,16 @@
 import { ClientProps } from 'src';
 import { ResetPasswordMutationVariables } from '@schema';
 
-const ResetPassword = (clientProps: ClientProps) => (resolverProps: ResetPasswordMutationVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './resetPassword.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const ResetPassword = (clientProps: ClientProps) => (resolverProps: ResetPasswordMutationVariables) => {
+    const { mergeOperations, useMutation } = clientProps;
+
+    const { resetPasswordMutation } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const [resetPassword, { error, loading }] = useMutation(resetPasswordMutation);
+
+    return { resetPassword, loading, error };
 };
 
 export default ResetPassword;

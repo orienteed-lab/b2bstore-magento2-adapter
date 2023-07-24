@@ -1,9 +1,24 @@
 import { ClientProps } from 'src';
 
-const GetDefaultShipping = (clientProps: ClientProps) => () => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './getDefaultShipping.gql';
 
-    return { data: {}, loading: false, error: undefined };
-};
+interface GetDefaultShippingProps {
+    isSignedIn?: boolean;
+}
+
+const GetDefaultShipping =
+    (clientProps: ClientProps) =>
+    (resolverProps: GetDefaultShippingProps = { isSignedIn: false }) => {
+        const { mergeOperations, useQuery } = clientProps;
+        const { isSignedIn } = resolverProps;
+
+        const { getDefaultShippingQuery } = mergeOperations(DEFAULT_OPERATIONS);
+
+        const { data, loading } = useQuery(getDefaultShippingQuery, {
+            skip: !isSignedIn
+        });
+
+        return { data, loading, getDefaultShippingQuery };
+    };
 
 export default GetDefaultShipping;

@@ -1,7 +1,11 @@
 import { gql } from '@apollo/client';
 
 export const GET_DEFAULT_SHIPPING = gql`
-    # Your query here
+    query GetDefaultShipping {
+        customer {
+            default_shipping
+        }
+    }
 `;
 
 export default {

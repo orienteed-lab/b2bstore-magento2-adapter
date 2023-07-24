@@ -1,10 +1,16 @@
 import { ClientProps } from 'src';
 import { SetDeliveryTimeMutationVariables } from '@schema';
 
-const SetDeliveryTime = (clientProps: ClientProps) => (resolverProps: SetDeliveryTimeMutationVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './setDeliveryTime.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const SetDeliveryTime = (clientProps: ClientProps) => (resolverProps: SetDeliveryTimeMutationVariables) => {
+    const { mergeOperations, useMutation } = clientProps;
+
+    const { setDeliveryTimeMutation } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const [deliverytime] = useMutation(setDeliveryTimeMutation);
+
+    return { deliverytime };
 };
 
 export default SetDeliveryTime;

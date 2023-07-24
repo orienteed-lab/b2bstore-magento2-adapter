@@ -1,10 +1,16 @@
 import { ClientProps } from 'src';
 import { AddSimpleProductsToQuoteMutationVariables } from '@schema';
 
-const AddSimpleProductsToQuote = (clientProps: ClientProps) => (resolverProps: AddSimpleProductsToQuoteMutationVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './addSimpleProductsToQuote.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const AddSimpleProductsToQuote = (clientProps: ClientProps) => (resolverProps: AddSimpleProductsToQuoteMutationVariables) => {
+    const { mergeOperations, useMutation } = clientProps;
+
+    const { addSimpleProductsToQuoteMutation } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const [addSimpleProductToQuote] = useMutation(addSimpleProductsToQuoteMutation);
+
+    return { addSimpleProductToQuote };
 };
 
 export default AddSimpleProductsToQuote;

@@ -1,9 +1,16 @@
 import { ClientProps } from 'src';
 
-const GetCountries = (clientProps: ClientProps) => () => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './getCountries.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const GetCountries = (clientProps: ClientProps) => () => {
+    const { useQuery, mergeOperations } = clientProps;
+
+    const operations = mergeOperations(DEFAULT_OPERATIONS);
+    const { getCountriesQuery } = operations;
+
+    const { data, loading, error } = useQuery(getCountriesQuery);
+
+    return { data, loading, error };
 };
 
 export default GetCountries;

@@ -1,10 +1,16 @@
 import { ClientProps } from 'src';
 import { DuplicateQuoteMutationVariables } from '@schema';
 
-const DuplicateQuote = (clientProps: ClientProps) => (resolverProps: DuplicateQuoteMutationVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './duplicateQuote.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const DuplicateQuote = (clientProps: ClientProps) => (resolverProps: DuplicateQuoteMutationVariables) => {
+    const { mergeOperations, useMutation } = clientProps;
+
+    const { duplicateQuoteMutation } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const [duplicateMpQuote] = useMutation(duplicateQuoteMutation);
+
+    return { duplicateMpQuote };
 };
 
 export default DuplicateQuote;

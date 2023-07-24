@@ -1,10 +1,26 @@
 import { ClientProps } from 'src';
 import { GetShippingMethodsQueryVariables } from '@schema';
 
-const GetShippingMethods = (clientProps: ClientProps) => (resolverProps: GetShippingMethodsQueryVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './getShippingMethods.gql';
 
-    return { data: {}, loading: false, error: undefined };
-};
+const GetShippingMethods =
+    (clientProps: ClientProps) =>
+    (resolverProps: GetShippingMethodsQueryVariables = { cartId: '' }) => {
+        const { mergeOperations, useQuery } = clientProps;
+        const { cartId } = resolverProps;
+
+        const { getShippingMethodsQuery } = mergeOperations(DEFAULT_OPERATIONS);
+
+        const { data } = useQuery(getShippingMethodsQuery, {
+            fetchPolicy: 'cache-and-network',
+            nextFetchPolicy: 'cache-first',
+            skip: !cartId,
+            variables: {
+                cartId
+            }
+        });
+
+        return { data, getShippingMethodsQuery };
+    };
 
 export default GetShippingMethods;

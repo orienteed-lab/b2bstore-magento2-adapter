@@ -1,10 +1,16 @@
 import { ClientProps } from 'src';
 import { UpdateQuoteMutationVariables } from '@schema';
 
-const UpdateQuote = (clientProps: ClientProps) => (resolverProps: UpdateQuoteMutationVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './updateQuote.gql';
 
-    return { data: {}, loading: false, error: undefined };
+const UpdateQuote = (clientProps: ClientProps) => (resolverProps: UpdateQuoteMutationVariables) => {
+    const { mergeOperations, useMutation } = clientProps;
+
+    const { updateQuoteMutation } = mergeOperations(DEFAULT_OPERATIONS);
+
+    const [updateItemQuantity, { loading, called }] = useMutation(updateQuoteMutation);
+
+    return { updateItemQuantity, loading, called };
 };
 
 export default UpdateQuote;

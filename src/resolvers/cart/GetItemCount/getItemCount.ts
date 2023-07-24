@@ -1,10 +1,23 @@
 import { ClientProps } from 'src';
 import { GetItemCountQueryVariables } from '@schema';
 
-const GetItemCount = (clientProps: ClientProps) => (resolverProps: GetItemCountQueryVariables) => {
-    // Look docs for more info about how to fill this function
+import DEFAULT_OPERATIONS from './getItemCount.gql'
 
-    return { data: {}, loading: false, error: undefined };
+const GetItemCount = (clientProps: ClientProps) => (resolverProps: GetItemCountQueryVariables) => {
+    const { mergeOperations, useQuery } = clientProps;
+    const { cartId } = resolverProps;
+
+    const { getItemCountQuery } = mergeOperations(DEFAULT_OPERATIONS);
+    const { data } = useQuery(getItemCountQuery, {
+        fetchPolicy: 'cache-and-network',
+        variables: {
+            cartId
+        },
+        skip: !cartId,
+        errorPolicy: 'all'
+    });
+
+    return { data };
 };
 
 export default GetItemCount;

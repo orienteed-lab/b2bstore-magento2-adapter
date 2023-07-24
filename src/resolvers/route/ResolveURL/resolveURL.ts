@@ -11,7 +11,7 @@ const ResolveURL = (clientProps: ClientProps) => (resolverProps: ResolveUrlQuery
 
     const [runQuery, { data, loading, error, called }] = useLazyQuery(resolveUrlQuery);
 
-    return { runQuery, data, loading, error, called };
+    return { runQuery, data, loading, error, called, resolveUrlQuery };
 };
 
 export default ResolveURL;

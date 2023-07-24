@@ -4,11 +4,11 @@ import { GetProductDetailForProductPageByUrlKeyQueryVariables } from '@schema';
 import DEFAULT_OPERATIONS from './getProductDetailForProductPageByUrlKey.gql';
 
 interface GetProductDetailForProductPageByUrlKeyProps extends GetProductDetailForProductPageByUrlKeyQueryVariables {
-    storeConfigData: any
+    storeConfigData?: any
 }
 
 const GetProductDetailForProductPageByUrlKey =
-    (clientProps: ClientProps) => (resolverProps: GetProductDetailForProductPageByUrlKeyProps) => {
+    (clientProps: ClientProps) => (resolverProps: GetProductDetailForProductPageByUrlKeyProps = {storeConfigData: false, urlKey: ''}) => {
         const { mergeOperations, useQuery } = clientProps;
         const { urlKey, storeConfigData } = resolverProps;
 

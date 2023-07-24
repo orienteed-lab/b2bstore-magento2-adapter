@@ -2,20 +2,31 @@ import { ClientProps } from 'src';
 
 import DEFAULT_OPERATIONS from './getStoreConfig.gql';
 
-const GetStoreConfig = (clientProps: ClientProps) => () => {
-    const { useQuery, mergeOperations, backendEdition } = clientProps;
+interface GetStoreConfigProps {
+    performQuery?: boolean;
+}
 
-    const operations = mergeOperations(DEFAULT_OPERATIONS);
-    const { getStoreConfigCEQuery, getStoreConfigEEQuery } = operations;
+const GetStoreConfig =
+    (clientProps: ClientProps) =>
+    (resolverProps: GetStoreConfigProps = { performQuery: true }) => {
+        const { useQuery, mergeOperations, backendEdition } = clientProps;
+        const { performQuery } = resolverProps;
 
-    const getStoreConfigQuery = backendEdition === 'EE' ? getStoreConfigEEQuery : getStoreConfigCEQuery;
+        const operations = mergeOperations(DEFAULT_OPERATIONS);
+        const { getStoreConfigCEQuery, getStoreConfigEEQuery } = operations;
 
-    const { data, loading, error, refetch } = useQuery(getStoreConfigQuery, {
-        fetchPolicy: 'cache-and-network',
-        nextFetchPolicy: 'cache-first'
-    });
+        if (!performQuery) {
+            return { getStoreConfigCEQuery, getStoreConfigEEQuery };
+        }
 
-    return { data, loading, error, refetch };
-};
+        const getStoreConfigQuery = backendEdition === 'EE' ? getStoreConfigEEQuery : getStoreConfigCEQuery;
+
+        const { data, loading, error, refetch } = useQuery(getStoreConfigQuery, {
+            fetchPolicy: 'cache-and-network',
+            nextFetchPolicy: 'cache-first'
+        });
+
+        return { data, loading, error, refetch };
+    };
 
 export default GetStoreConfig;

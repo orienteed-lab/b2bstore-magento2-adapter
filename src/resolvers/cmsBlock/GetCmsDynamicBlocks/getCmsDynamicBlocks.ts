@@ -21,7 +21,7 @@ const GetCmsDynamicBlocks = (clientProps: ClientProps) => (resolverProps: GetCms
         skip: !cartId
     });
 
-    return { client, data, loading, error, refetch };
+    return { client, data, loading, error, refetch, getCmsDynamicBlocksQuery };
 };
 
 export default GetCmsDynamicBlocks;

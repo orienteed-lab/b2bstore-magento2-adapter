@@ -4,10 +4,10 @@ import { AddProductToCartMutationVariables } from '@schema';
 import DEFAULT_OPERATIONS from './addProductToCart.gql';
 
 interface AddProductToCartProps extends AddProductToCartMutationVariables {
-    initialRun: boolean;
+    initialRun?: boolean;
 }
 
-const AddProductToCart = (clientProps: ClientProps) => (resolverProps: AddProductToCartProps) => {
+const AddProductToCart = (clientProps: ClientProps) => (resolverProps: AddProductToCartProps = {initialRun: false, cartId: '', product: {quantity: 0, sku: ''}}) => {
     const { mergeOperations, useMutation } = clientProps;
     const { initialRun } = resolverProps;
 

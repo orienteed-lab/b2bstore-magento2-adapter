@@ -5,10 +5,10 @@ import DEFAULT_OPERATIONS from './addProductToWishlist.gql';
 import WISHLIST_OPERATIONS from '../GetWishlists/getWishlists.gql';
 
 interface AddProductToWishlistProps extends AddProductToWishlistMutationVariables {
-    hasRefetch: boolean;
+    hasRefetch?: boolean;
 }
 
-const AddProductToWishlist = (clientProps: ClientProps) => (resolverProps: AddProductToWishlistProps) => {
+const AddProductToWishlist = (clientProps: ClientProps) => (resolverProps: AddProductToWishlistProps={itemOptions:{quantity:0, sku: ''}, wishlistId: '', hasRefetch: false}) => {
     const { mergeOperations, backendEdition, useMutation } = clientProps;
     const { hasRefetch } = resolverProps;
 

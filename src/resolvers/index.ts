@@ -137,3 +137,4 @@ export { default as isEmailAvailable } from './customer/IsEmailAvailable/isEmail
 export { default as getPriceSummary } from './cart/GetPriceSummary/getPriceSummary';
 export { default as submitCustomerPriceAlert } from './productsAlerts/SubmitCustomerPriceAlert/submitCustomerPriceAlert';
 export { default as getCustomerAlerts } from './productsAlerts/GetCustomersAlerts/getCustomerAlerts';
+export { default as submitGuestPriceAlert } from './productsAlerts/SubmitGuestPriceAlert/submitGuestPriceAlert';

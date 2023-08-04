@@ -137,7 +137,8 @@ import {
     isEmailAvailable,
     getPriceSummary,
     submitCustomerPriceAlert,
-    getCustomerAlerts
+    getCustomerAlerts,
+    submitGuestPriceAlert
 } from './resolvers';
 
 export interface ClientProps {
@@ -291,6 +292,7 @@ export const getResolvers = (clientProps: ClientProps) => {
         isEmailAvailable: isEmailAvailable(clientProps),
         getPriceSummary: getPriceSummary(clientProps),
         submitCustomerPriceAlert: submitCustomerPriceAlert(clientProps),
-        getCustomerAlerts: getCustomerAlerts(clientProps)
+        getCustomerAlerts: getCustomerAlerts(clientProps),
+        submitGuestPriceAlert: submitGuestPriceAlert(clientProps)
     };
 };

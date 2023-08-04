@@ -2,7 +2,7 @@ import { ClientProps } from 'src';
 
 import DEFAULT_OPERATIONS from './submitGuestStockAlert.gql';
 
-const SubmitGuestPriceAlert =
+const SubmitGuestStockAlert =
     (clientProps: ClientProps) => () => {
         const { useMutation, mergeOperations } = clientProps;
 
@@ -14,4 +14,4 @@ const SubmitGuestPriceAlert =
         return { submitGuestStockAlert };
     };
 
-export default SubmitGuestPriceAlert;
+export default SubmitGuestStockAlert;

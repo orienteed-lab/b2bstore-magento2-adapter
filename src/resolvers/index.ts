@@ -140,3 +140,4 @@ export { default as getCustomerAlerts } from './productsAlerts/GetCustomersAlert
 export { default as submitGuestPriceAlert } from './productsAlerts/SubmitGuestPriceAlert/submitGuestPriceAlert';
 export { default as submitCustomerStockAlert } from './productsAlerts/SubmitCustomerStockAlert/submitCustomerStockAlert';
 export { default as submitGuestStockAlert } from './productsAlerts/SubmitGuestStockAlert/submitGuestStockAlert';
+export { default as submitDeleteAlert } from './productsAlerts/SubmitDeleteAlert/submitDeleteAlert';

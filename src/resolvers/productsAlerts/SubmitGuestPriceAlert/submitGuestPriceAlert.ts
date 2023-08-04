@@ -9,9 +9,9 @@ const SubmitGuestPriceAlert =
         const operations = mergeOperations(DEFAULT_OPERATIONS);
         const { submitGuestPriceAlertMutation } = operations;
 
-        const [submiGuestPriceAlert] = useMutation(submitGuestPriceAlertMutation);
+        const [submitGuestPriceAlert] = useMutation(submitGuestPriceAlertMutation);
 
-        return { submiGuestPriceAlert };
+        return { submitGuestPriceAlert };
     };
 
 export default SubmitGuestPriceAlert;

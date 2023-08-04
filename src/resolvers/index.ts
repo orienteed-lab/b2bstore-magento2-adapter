@@ -138,3 +138,4 @@ export { default as getPriceSummary } from './cart/GetPriceSummary/getPriceSumma
 export { default as submitCustomerPriceAlert } from './productsAlerts/SubmitCustomerPriceAlert/submitCustomerPriceAlert';
 export { default as getCustomerAlerts } from './productsAlerts/GetCustomersAlerts/getCustomerAlerts';
 export { default as submitGuestPriceAlert } from './productsAlerts/SubmitGuestPriceAlert/submitGuestPriceAlert';
+export { default as submitCustomerStockAlert } from './productsAlerts/SubmitCustomerStockAlert/submitCustomerStockAlert';

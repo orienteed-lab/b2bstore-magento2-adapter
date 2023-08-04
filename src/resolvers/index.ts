@@ -135,3 +135,4 @@ export { default as setGuestShipping } from './cart/SetGuestShipping/setGuestShi
 export { default as setGuestEmailOnCart } from './cart/SetGuestEmailOnCart/setGuestEmailOnCart';
 export { default as isEmailAvailable } from './customer/IsEmailAvailable/isEmailAvailable';
 export { default as getPriceSummary } from './cart/GetPriceSummary/getPriceSummary';
+export { default as submitCustomerPriceAlert } from './productsAlerts/SubmitCustomerPriceAlert/submitCustomerPriceAlert';

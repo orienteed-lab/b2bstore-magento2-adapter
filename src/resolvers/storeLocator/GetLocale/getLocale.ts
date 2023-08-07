@@ -2,7 +2,7 @@ import { ClientProps } from 'src';
 
 import DEFAULT_OPERATIONS from './getLocale.gql';
 
-const GetStoreConfig = (clientProps: ClientProps) => () => {
+const GetLocale = (clientProps: ClientProps) => () => {
     const { useQuery, mergeOperations } = clientProps;
 
     const operations = mergeOperations(DEFAULT_OPERATIONS);
@@ -16,4 +16,4 @@ const GetStoreConfig = (clientProps: ClientProps) => () => {
     return { data };
 };
 
-export default GetStoreConfig;
+export default GetLocale;

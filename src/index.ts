@@ -143,7 +143,8 @@ import {
     submitGuestStockAlert,
     submitDeleteAlert,
     getConfigAlerts,
-    getLocale
+    getLocale,
+    getStoreLocations
 } from './resolvers';
 
 export interface ClientProps {
@@ -303,6 +304,7 @@ export const getResolvers = (clientProps: ClientProps) => {
         submitGuestStockAlert: submitGuestStockAlert(clientProps),
         submitDeleteAlert: submitDeleteAlert(clientProps),
         getConfigAlerts: getConfigAlerts(clientProps),
-        getLocale: getLocale(clientProps)
+        getLocale: getLocale(clientProps),
+        getStoreLocations: getStoreLocations(clientProps)
     };
 };

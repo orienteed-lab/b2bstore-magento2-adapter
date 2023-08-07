@@ -2,7 +2,7 @@ import { ClientProps } from 'src';
 
 import DEFAULT_OPERATIONS from './getConfigAlerts.gql';
 
-const GetStoreConfig =
+const GetConfigAlerts =
     (clientProps: ClientProps) => () => {
         const { useQuery, mergeOperations } = clientProps;
 
@@ -17,4 +17,4 @@ const GetStoreConfig =
         return { data };
     };
 
-export default GetStoreConfig;
+export default GetConfigAlerts;

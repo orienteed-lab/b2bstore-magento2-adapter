@@ -142,3 +142,4 @@ export { default as submitCustomerStockAlert } from './productsAlerts/SubmitCust
 export { default as submitGuestStockAlert } from './productsAlerts/SubmitGuestStockAlert/submitGuestStockAlert';
 export { default as submitDeleteAlert } from './productsAlerts/SubmitDeleteAlert/submitDeleteAlert';
 export { default as getConfigAlerts } from './productsAlerts/GetConfigAlerts/getConfigAlerts';
+export { default as getLocale } from './storeLocator/GetLocale/getLocale';

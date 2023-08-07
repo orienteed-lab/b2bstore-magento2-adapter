@@ -141,7 +141,8 @@ import {
     submitGuestPriceAlert,
     submitCustomerStockAlert,
     submitGuestStockAlert,
-    submitDeleteAlert
+    submitDeleteAlert,
+    getConfigAlerts
 } from './resolvers';
 
 export interface ClientProps {
@@ -299,6 +300,7 @@ export const getResolvers = (clientProps: ClientProps) => {
         submitGuestPriceAlert: submitGuestPriceAlert(clientProps),
         submitCustomerStockAlert: submitCustomerStockAlert(clientProps),
         submitGuestStockAlert: submitGuestStockAlert(clientProps),
-        submitDeleteAlert: submitDeleteAlert(clientProps)
+        submitDeleteAlert: submitDeleteAlert(clientProps),
+        getConfigAlerts: getConfigAlerts(clientProps)
     };
 };

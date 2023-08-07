@@ -3,17 +3,28 @@ import { GetSimpleProductQueryVariables } from '@schema';
 
 import DEFAULT_OPERATIONS from './getSimpleProduct.gql';
 
-const GetSimpleProduct = (clientProps: ClientProps) => (resolverProps: GetSimpleProductQueryVariables) => {
-    const { mergeOperations, useQuery } = clientProps;
-    const { sku } = resolverProps;
+interface GetSimpleProductProps extends GetSimpleProductQueryVariables {
+    includeProductAlert?: boolean;
+    includeProductAttachment?: boolean;
+}
 
-    const { getSimpleProductQuery } = mergeOperations(DEFAULT_OPERATIONS);
+const GetSimpleProduct =
+    (clientProps: ClientProps) =>
+    (resolverProps: GetSimpleProductProps = { sku: '', includeProductAlert: false, includeProductAttachment: false }) => {
+        const { mergeOperations, useQuery } = clientProps;
+        const { sku, includeProductAlert, includeProductAttachment } = resolverProps;
 
-    const { data, loading, error } = useQuery(getSimpleProductQuery, {
-        variables: { sku: sku }
-    });
+        const { getSimpleProductQuery } = mergeOperations(DEFAULT_OPERATIONS);
 
-    return { data, loading, error };
-};
+        const { data, loading, error } = useQuery(getSimpleProductQuery, {
+            variables: {
+                sku: sku,
+                includeProductAlert,
+                includeProductAttachment
+            }
+        });
+
+        return { data, loading, error };
+    };
 
 export default GetSimpleProduct;

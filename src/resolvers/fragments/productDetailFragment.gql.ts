@@ -3,6 +3,16 @@ import { gql } from '@apollo/client';
 export const ProductDetailsFragment = gql`
     fragment ProductDetailsFragment on ProductInterface {
         __typename
+        # mp_pickup_locations {
+        #     productStock
+        #     locationsData {
+        #         name
+        #         city
+        #         country
+        #         street
+        #         state_province
+        #     }
+        # }
         categories {
             uid
             breadcrumbs {

@@ -4,13 +4,23 @@ import { GetProductDetailForProductPageByUrlKeyQueryVariables } from '@schema';
 import DEFAULT_OPERATIONS from './getProductDetailForProductPageByUrlKey.gql';
 
 interface GetProductDetailForProductPageByUrlKeyProps extends GetProductDetailForProductPageByUrlKeyQueryVariables {
-    storeConfigData?: any
+    storeConfigData?: any;
+    includeProductAlert?: boolean;
+    includeProductAttachment?: boolean;
 }
 
 const GetProductDetailForProductPageByUrlKey =
-    (clientProps: ClientProps) => (resolverProps: GetProductDetailForProductPageByUrlKeyProps = {storeConfigData: false, urlKey: ''}) => {
+    (clientProps: ClientProps) =>
+    (
+        resolverProps: GetProductDetailForProductPageByUrlKeyProps = {
+            storeConfigData: false,
+            urlKey: '',
+            includeProductAlert: false,
+            includeProductAttachment: false
+        }
+    ) => {
         const { mergeOperations, useQuery } = clientProps;
-        const { urlKey, storeConfigData } = resolverProps;
+        const { urlKey, storeConfigData, includeProductAlert, includeProductAttachment } = resolverProps;
 
         const { getProductDetailForProductPageByUrlKeyQuery } = mergeOperations(DEFAULT_OPERATIONS);
 
@@ -19,7 +29,9 @@ const GetProductDetailForProductPageByUrlKey =
             nextFetchPolicy: 'cache-first',
             skip: !storeConfigData,
             variables: {
-                urlKey
+                urlKey,
+                includeProductAlert,
+                includeProductAttachment
             }
         });
 

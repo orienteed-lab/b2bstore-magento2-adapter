@@ -135,7 +135,20 @@ import {
     setGuestShipping,
     setGuestEmailOnCart,
     isEmailAvailable,
-    getPriceSummary
+    getPriceSummary,
+    submitCustomerPriceAlert,
+    getCustomerAlerts,
+    submitGuestPriceAlert,
+    submitCustomerStockAlert,
+    submitGuestStockAlert,
+    submitDeleteAlert,
+    getConfigAlerts,
+    getLocale,
+    getStoreLocations,
+    getLocationsCart,
+    getLocationHolidays,
+    submitLocation,
+    getStoreId
 } from './resolvers';
 
 export interface ClientProps {
@@ -287,6 +300,19 @@ export const getResolvers = (clientProps: ClientProps) => {
         setGuestShipping: setGuestShipping(clientProps),
         setGuestEmailOnCart: setGuestEmailOnCart(clientProps),
         isEmailAvailable: isEmailAvailable(clientProps),
-        getPriceSummary: getPriceSummary(clientProps)
+        getPriceSummary: getPriceSummary(clientProps),
+        submitCustomerPriceAlert: submitCustomerPriceAlert(clientProps),
+        getCustomerAlerts: getCustomerAlerts(clientProps),
+        submitGuestPriceAlert: submitGuestPriceAlert(clientProps),
+        submitCustomerStockAlert: submitCustomerStockAlert(clientProps),
+        submitGuestStockAlert: submitGuestStockAlert(clientProps),
+        submitDeleteAlert: submitDeleteAlert(clientProps),
+        getConfigAlerts: getConfigAlerts(clientProps),
+        getLocale: getLocale(clientProps),
+        getStoreLocations: getStoreLocations(clientProps),
+        getLocationsCart: getLocationsCart(clientProps),
+        getLocationHolidays: getLocationHolidays(clientProps),
+        submitLocation: submitLocation(clientProps),
+        getStoreId: getStoreId(clientProps)
     };
 };

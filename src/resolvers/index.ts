@@ -135,3 +135,16 @@ export { default as setGuestShipping } from './cart/SetGuestShipping/setGuestShi
 export { default as setGuestEmailOnCart } from './cart/SetGuestEmailOnCart/setGuestEmailOnCart';
 export { default as isEmailAvailable } from './customer/IsEmailAvailable/isEmailAvailable';
 export { default as getPriceSummary } from './cart/GetPriceSummary/getPriceSummary';
+export { default as submitCustomerPriceAlert } from './productsAlerts/SubmitCustomerPriceAlert/submitCustomerPriceAlert';
+export { default as getCustomerAlerts } from './productsAlerts/GetCustomersAlerts/getCustomerAlerts';
+export { default as submitGuestPriceAlert } from './productsAlerts/SubmitGuestPriceAlert/submitGuestPriceAlert';
+export { default as submitCustomerStockAlert } from './productsAlerts/SubmitCustomerStockAlert/submitCustomerStockAlert';
+export { default as submitGuestStockAlert } from './productsAlerts/SubmitGuestStockAlert/submitGuestStockAlert';
+export { default as submitDeleteAlert } from './productsAlerts/SubmitDeleteAlert/submitDeleteAlert';
+export { default as getConfigAlerts } from './productsAlerts/GetConfigAlerts/getConfigAlerts';
+export { default as getLocale } from './storeLocator/GetLocale/getLocale';
+export { default as getStoreLocations } from './storeLocator/GetStoreLocations/getStoreLocations';
+export { default as getLocationsCart } from './storeLocator/GetLocationsCart/getLocationsCart';
+export { default as getLocationHolidays } from './storeLocator/GetLocationHolidays/getLocationHolidays';
+export { default as submitLocation } from './storeLocator/SubmitLocation/submitLocation';
+export { default as getStoreId } from './storeLocator/GetStoreId/getStoreId';

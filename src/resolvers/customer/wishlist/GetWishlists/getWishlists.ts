@@ -5,13 +5,14 @@ import DEFAULT_OPERATIONS from './getWishlists.gql';
 interface GetWishlistsProps {
     isSignedIn?: boolean;
     hasIsSignedIn: boolean;
+    performQuery?: boolean;
 }
 
 const GetWishlists =
     (clientProps: ClientProps) =>
-    (resolverProps: GetWishlistsProps = { hasIsSignedIn: false }) => {
+    (resolverProps: GetWishlistsProps = { hasIsSignedIn: false, performQuery: true }) => {
         const { mergeOperations, backendEdition, useQuery } = clientProps;
-        const { hasIsSignedIn } = resolverProps;
+        const { hasIsSignedIn, performQuery } = resolverProps;
 
         const { getWishlistsQueryCE, getWishlistsQueryEE } = mergeOperations(DEFAULT_OPERATIONS);
         const getWishlistsQuery = backendEdition === 'EE' ? getWishlistsQueryEE : getWishlistsQueryCE;
@@ -27,6 +28,9 @@ const GetWishlists =
 
             return { data, error, loading };
         } else {
+            if (!performQuery) {
+                return { getWishlistsQuery };
+            }
             const { data } = useQuery(getWishlistsQuery, {
                 fetchPolicy: 'cache-and-network'
             });

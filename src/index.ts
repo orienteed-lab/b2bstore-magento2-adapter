@@ -145,7 +145,8 @@ import {
     getConfigAlerts,
     getLocale,
     getStoreLocations,
-    getLocationsCart
+    getLocationsCart,
+    getLocationHolidays
 } from './resolvers';
 
 export interface ClientProps {
@@ -307,6 +308,7 @@ export const getResolvers = (clientProps: ClientProps) => {
         getConfigAlerts: getConfigAlerts(clientProps),
         getLocale: getLocale(clientProps),
         getStoreLocations: getStoreLocations(clientProps),
-        getLocationsCart: getLocationsCart(clientProps)
+        getLocationsCart: getLocationsCart(clientProps),
+        getLocationHolidays: getLocationHolidays(clientProps)
     };
 };

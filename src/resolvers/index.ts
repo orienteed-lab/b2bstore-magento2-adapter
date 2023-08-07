@@ -145,3 +145,4 @@ export { default as getConfigAlerts } from './productsAlerts/GetConfigAlerts/get
 export { default as getLocale } from './storeLocator/GetLocale/getLocale';
 export { default as getStoreLocations } from './storeLocator/GetStoreLocations/getStoreLocations';
 export { default as getLocationsCart } from './storeLocator/GetLocationsCart/getLocationsCart';
+export { default as getLocationHolidays } from './storeLocator/GetLocationHolidays/getLocationHolidays';

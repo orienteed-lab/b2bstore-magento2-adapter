@@ -147,7 +147,8 @@ import {
     getStoreLocations,
     getLocationsCart,
     getLocationHolidays,
-    submitLocation
+    submitLocation,
+    getStoreId
 } from './resolvers';
 
 export interface ClientProps {
@@ -311,6 +312,7 @@ export const getResolvers = (clientProps: ClientProps) => {
         getStoreLocations: getStoreLocations(clientProps),
         getLocationsCart: getLocationsCart(clientProps),
         getLocationHolidays: getLocationHolidays(clientProps),
-        submitLocation: submitLocation(clientProps)
+        submitLocation: submitLocation(clientProps),
+        getStoreId: getStoreId(clientProps)
     };
 };

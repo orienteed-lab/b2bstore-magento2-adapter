@@ -147,3 +147,4 @@ export { default as getStoreLocations } from './storeLocator/GetStoreLocations/g
 export { default as getLocationsCart } from './storeLocator/GetLocationsCart/getLocationsCart';
 export { default as getLocationHolidays } from './storeLocator/GetLocationHolidays/getLocationHolidays';
 export { default as submitLocation } from './storeLocator/SubmitLocation/submitLocation';
+export { default as getStoreId } from './storeLocator/GetStoreId/getStoreId';

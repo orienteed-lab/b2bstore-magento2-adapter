@@ -3,11 +3,25 @@ import { GetWishlistProductsQueryVariables } from '@schema';
 
 import DEFAULT_OPERATIONS from './getWishlistProducts.gql';
 
-const GetWishlistProducts = (clientProps: ClientProps) => (resolverProps: GetWishlistProductsQueryVariables) => {
-    const { mergeOperations, useLazyQuery } = clientProps;
-    const { id, currentPage } = resolverProps;
+interface GetWishlistProductsProps extends GetWishlistProductsQueryVariables {
+    isUseQuery?:boolean;
+}
+
+const GetWishlistProducts = (clientProps: ClientProps) => (resolverProps: GetWishlistProductsProps = {id: '', currentPage: 0, isUseQuery: false}) => {
+    const { mergeOperations, useLazyQuery, useQuery } = clientProps;
+    const { id, currentPage, isUseQuery } = resolverProps;
 
     const { getWishlistProductsQuery } = mergeOperations(DEFAULT_OPERATIONS);
+
+    if (isUseQuery) {
+        const {data} = useQuery(getWishlistProductsQuery, {
+            variables: {
+                id: '0'
+            }
+        });
+
+        return {data};
+    }
 
     const [fetchWishlistItems, queryResult] = useLazyQuery(getWishlistProductsQuery, {
         fetchPolicy: 'cache-and-network',

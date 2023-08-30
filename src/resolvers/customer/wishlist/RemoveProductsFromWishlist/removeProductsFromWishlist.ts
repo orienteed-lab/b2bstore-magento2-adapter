@@ -2,18 +2,22 @@ import { ClientProps } from 'src';
 import { RemoveProductsFromWishlistMutationVariables } from '@schema';
 
 import DEFAULT_OPERATIONS from './removeProductsFromWishlist.gql';
+import { ItemsReviewFragment } from 'src/resolvers/fragments/itemsReviewFragments.gql';
 
 interface RemoveProductsFromWishlistProps extends RemoveProductsFromWishlistMutationVariables {
     sku?: any;
     item?: any;
     isFromUse?: boolean;
+    isFromUseSingle?: boolean;
 }
 
 const RemoveProductsFromWishlist =
     (clientProps: ClientProps) =>
-    (resolverProps: RemoveProductsFromWishlistProps = { isFromUse: false, wishlistId: '', wishlistItemsId: '' }) => {
+    (
+        resolverProps: RemoveProductsFromWishlistProps = { isFromUse: false, wishlistId: '', wishlistItemsId: '', isFromUseSingle: false }
+    ) => {
         const { mergeOperations, backendEdition, useMutation } = clientProps;
-        const { wishlistId, wishlistItemsId, isFromUse } = resolverProps;
+        const { wishlistId, wishlistItemsId, isFromUse, isFromUseSingle } = resolverProps;
 
         const { removeProductsFromWishlistMutationCE, removeProductsFromWishlistMutationEE } = mergeOperations(DEFAULT_OPERATIONS);
         const removeProductsFromWishlistMutation =
@@ -54,6 +58,22 @@ const RemoveProductsFromWishlist =
             });
 
             return { removeProductsFromWishlist };
+        } else if (isFromUseSingle) {
+            const { item } = resolverProps;
+            const [removeProductsFromWishlist, { data, error }] = useMutation(removeProductsFromWishlistMutation, {
+                update: (cache: any) => {
+                    cache.modify({
+                        id: 'ROOT_QUERY',
+                        fields: {
+                            customerWishlistProducts: (cachedProducts: any) => {
+                                return cachedProducts.filter((sku: any) => sku !== item.sku);
+                            }
+                        }
+                    });
+                }
+            });
+
+            return { removeProductsFromWishlist, data, error };
         } else {
             const [removeProductsFromWishlist] = useMutation(removeProductsFromWishlistMutation, {
                 update: (cache: any) => {

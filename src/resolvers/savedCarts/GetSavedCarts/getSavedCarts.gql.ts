@@ -9,10 +9,6 @@ export const GET_SAVED_CARTS = gql`
                 page_size
             }
             items {
-                attribute_labels_and_values {
-                    label
-                    value
-                }
                 cart_id
                 created_at
                 cart_name
@@ -24,6 +20,10 @@ export const GET_SAVED_CARTS = gql`
                     value
                 }
                 items {
+                    attribute_labels_and_values {
+                        label
+                        value
+                    }
                     cart_id
                     cart_item_id
                     product_name

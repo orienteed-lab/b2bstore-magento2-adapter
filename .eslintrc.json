@@ -5,7 +5,7 @@
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
-    "plugins": ["react", "@typescript-eslint", "prettier", "simple-import-sort"],
+    "plugins": ["@typescript-eslint", "prettier", "simple-import-sort"],
     "rules": {
         "no-unused-vars": "off"
     },

@@ -6,14 +6,13 @@ import DEFAULT_OPERATIONS from './getProductAggregationsFilteredByCategory.gql';
 const GetProductAggregationsFilteredByCategory =
     (clientProps: ClientProps) => (resolverProps: GetProductAggregationsFilteredByCategoryQueryVariables) => {
         const { mergeOperations, useLazyQuery } = clientProps;
-        const { categoryIdFilter } = resolverProps;
 
         const { getProductAggregationsFilteredByCategoryQuery } = mergeOperations(DEFAULT_OPERATIONS);
 
         const [getFilters, { data }] = useLazyQuery(getProductAggregationsFilteredByCategoryQuery, {
             fetchPolicy: 'cache-and-network',
             nextFetchPolicy: 'cache-first',
-            variables: { categoryIdFilter }
+            variables: { categoryIdFilter: resolverProps?.categoryIdFilter }
         });
 
         return { getFilters, data };

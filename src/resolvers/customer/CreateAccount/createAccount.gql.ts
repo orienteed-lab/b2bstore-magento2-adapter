@@ -4,6 +4,7 @@ export const CREATE_ACCOUNT = gql`
     mutation CreateAccount(
         $email: String!
         $firstname: String!
+        $lastname: String!
         $password: String!
         $is_subscribed: Boolean!
     ) {
@@ -11,6 +12,7 @@ export const CREATE_ACCOUNT = gql`
             input: {
                 email: $email
                 firstname: $firstname
+                lastname: $lastname
                 password: $password
                 is_subscribed: $is_subscribed
             }
